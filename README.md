@@ -12,7 +12,7 @@ Diseñado desde cero para despliegues empresariales autónomos, sin acoplamiento
 - **Persistencia:** PostgreSQL 16 estructurado bajo la **Tercera Forma Normal (3FN)** con claves foráneas, índices de alto rendimiento y auditoría inmutable.
 - **Frontend / UI/UX:** Blade + Tailwind CSS + Alpine.js + ApexCharts + SweetAlert2 + Lucide Icons.
 - **Contenedores:** Docker & Docker Compose (servicios `app` y `db` totalmente aislados y portables).
-- **Control de Versiones:** Git con rama `main` listo para GitLab.
+- **Control de Versiones:** Git con rama `main` listo para GitHub.
 
 ---
 
@@ -67,14 +67,16 @@ El diseño relacional elimina redundancias y garantiza integridad referencial:
 
 ---
 
-## 🦊 Publicación en GitLab (`gitlab.bdt.com.ve`)
+## 🐙 Publicación en GitHub (`royclar28`)
 
-Para subir el proyecto a un repositorio nuevo en GitLab:
+Para vincular y subir el proyecto a tu cuenta en GitHub:
 
 ```bash
-# 1. Agregar el remote de GitLab
-git remote add origin https://gitlab.bdt.com.ve/developers/bicentenariodevs/ruta-credito-app.git
+# 1. Crear el repositorio vacío en GitHub (ej. con nombre `ruta-credito-app`)
 
-# 2. Subir la rama principal
+# 2. Agregar el remote de GitHub vía SSH
+git remote add origin git@github.com:royclar28/ruta-credito-app.git
+
+# 3. Subir la rama principal
 git push -u origin main
 ```
