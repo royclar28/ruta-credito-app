@@ -1,59 +1,80 @@
-<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400" alt="Laravel Logo"></a></p>
+# Ruta de Crédito - Sistema Autónomo y Desacoplado
 
-<p align="center">
-<a href="https://github.com/laravel/framework/actions"><img src="https://github.com/laravel/framework/workflows/tests/badge.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/dt/laravel/framework" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
-</p>
+Sistema independiente, modular y centralizado para la gestión operativa, workflow de estatus, trazabilidad histórica, reportería consolidada y dashboard ejecutivo de KPIs del módulo **Ruta de Crédito**.
 
-## About Laravel
+Diseñado desde cero para despliegues empresariales autónomos, sin acoplamiento a infraestructuras externas propietarias (sin dependencia de LDAP BDT, SIGEFIRRHH ni ESB Mule).
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+---
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+## 🚀 Stack Tecnológico
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
+- **Backend:** Laravel 12 (PHP 8.4)
+- **Persistencia:** PostgreSQL 16 estructurado bajo la **Tercera Forma Normal (3FN)** con claves foráneas, índices de alto rendimiento y auditoría inmutable.
+- **Frontend / UI/UX:** Blade + Tailwind CSS + Alpine.js + ApexCharts + SweetAlert2 + Lucide Icons.
+- **Contenedores:** Docker & Docker Compose (servicios `app` y `db` totalmente aislados y portables).
+- **Control de Versiones:** Git con rama `main` listo para GitLab.
 
-## Learning Laravel
+---
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework. You can also check out [Laravel Learn](https://laravel.com/learn), where you will be guided through building a modern Laravel application.
+## 📦 Despliegue Rápido con Docker
 
-If you don't feel like reading, [Laracasts](https://laracasts.com) can help. Laracasts contains thousands of video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
+### 1. Iniciar los Servicios
+```bash
+docker compose up -d
+```
+El contenedor de PostgreSQL (`db`) y la aplicación (`app`) levantarán automáticamente:
+- **Aplicación Web:** [http://localhost:8095](http://localhost:8095)
+- **Base de Datos PostgreSQL:** `localhost:5439` (usuario: `postgres`, password: `postgres`, BD: `db_ruta_credito`)
 
-## Laravel Sponsors
+### 2. Migraciones y Seeders (Ya ejecutados en el setup inicial)
+Si deseas reiniciar la base de datos limpia con datos de prueba:
+```bash
+docker exec -it ruta_credito_app php artisan migrate:fresh --seed
+```
 
-We would like to extend our thanks to the following sponsors for funding Laravel development. If you are interested in becoming a sponsor, please visit the [Laravel Partners program](https://partners.laravel.com).
+---
 
-### Premium Partners
+## 👥 Cuentas de Acceso y Simulador de Roles
 
-- **[Vehikl](https://vehikl.com)**
-- **[Tighten Co.](https://tighten.co)**
-- **[Kirschbaum Development Group](https://kirschbaumdevelopment.com)**
-- **[64 Robots](https://64robots.com)**
-- **[Curotec](https://www.curotec.com/services/technologies/laravel)**
-- **[DevSquad](https://devsquad.com/hire-laravel-developers)**
-- **[Redberry](https://redberry.international/laravel-development)**
-- **[Active Logic](https://activelogic.com)**
+Todas las cuentas vienen preconfiguradas con la contraseña: **`password123`**
 
-## Contributing
+| Perfil / Rol | Correo Electrónico | Alcance Operativo |
+| :--- | :--- | :--- |
+| **Administrador General** | `admin@empresa.com` | Control total, liquidación final y gobernanza del sistema. |
+| **Analista Carterizados** | `analista.carterizados@empresa.com` | Gestión de bandeja especializada de Grandes Clientes Carterizados. |
+| **Analista PYME** | `analista.pyme@empresa.com` | Evaluación de solicitudes de Personas y PYMES. |
+| **Analista Consumo** | `analista.consumo@empresa.com` | Préstamos personales y nómina. |
+| **Comité de Crédito** | `comite@empresa.com` | Aprobación colegiada, diferimiento o rechazo. |
+| **Vicepresidencia de Crédito** | `vp.credito@empresa.com` | Aprobación ejecutiva y dictamen de alto nivel. |
+| **Gerente de Agencia** | `gerente.agencia@empresa.com` | Radicación de solicitudes en sucursales territoriales. |
+| **Auditor de Riesgo** | `auditor@empresa.com` | Supervisión de auditoría cronológica y KPIs. |
 
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
+> **Nota UI/UX:** El sistema cuenta con un **Simulador de Perfil (1-Click Switcher)** en el navbar superior que permite alternar entre perfiles instantáneamente sin necesidad de reloguearse.
 
-## Code of Conduct
+---
 
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
+## 🏛️ Estructura de Base de Datos (3FN)
 
-## Security Vulnerabilities
+El diseño relacional elimina redundancias y garantiza integridad referencial:
+- `roles` & `users`: Control de acceso basado en roles (RBAC).
+- `regions`, `states` & `agencies`: Catálogo geográfico y red de sucursales.
+- `credit_products` & `credit_subproducts`: Productos y subproductos bancarios.
+- `customers`: Clientes naturales y jurídicos normalizados.
+- `credit_statuses` & `workflow_transitions`: Motor de estados configurable con transiciones gobernadas por rol.
+- `credit_requests`: Solicitud principal con montos en divisas y equivalencia UVC indexada.
+- `credit_request_histories`: Trazabilidad inmutable (timestamp, usuario, acción, estatus previo, estatus destino, observaciones, IP, User-Agent).
+- `credit_legal_documents`: Expediente digital adjunto.
 
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
+---
 
-## License
+## 🦊 Publicación en GitLab (`gitlab.bdt.com.ve`)
 
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+Para subir el proyecto a un repositorio nuevo en GitLab:
+
+```bash
+# 1. Agregar el remote de GitLab
+git remote add origin https://gitlab.bdt.com.ve/developers/bicentenariodevs/ruta-credito-app.git
+
+# 2. Subir la rama principal
+git push -u origin main
+```
