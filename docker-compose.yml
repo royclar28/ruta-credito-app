@@ -1,0 +1,46 @@
+services:
+  app:
+    image: sisproa-migracion-frankenphp:v1.0
+    container_name: ruta_credito_app
+    restart: unless-stopped
+    working_dir: /app
+    ports:
+      - "8095:8000"
+    volumes:
+      - ./:/app
+    env_file:
+      - .env
+    entrypoint: /bin/sh -c "php artisan serve --host=0.0.0.0 --port=8000"
+    depends_on:
+      db:
+        condition: service_healthy
+    networks:
+      - ruta_credito_net
+
+  db:
+    image: postgres:16-alpine
+    container_name: ruta_credito_postgres
+    restart: unless-stopped
+    environment:
+      POSTGRES_DB: db_ruta_credito
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+    ports:
+      - "5439:5432"
+    volumes:
+      - ruta_credito_pgdata:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U postgres -d db_ruta_credito"]
+      interval: 5s
+      timeout: 5s
+      retries: 5
+    networks:
+      - ruta_credito_net
+
+volumes:
+  ruta_credito_pgdata:
+    driver: local
+
+networks:
+  ruta_credito_net:
+    driver: bridge
