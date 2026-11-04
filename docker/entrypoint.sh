@@ -13,9 +13,12 @@ if [ ! -f /app/.env ]; then
     fi
 fi
 
-# 2. Configurar conexión por defecto si viene DATABASE_URL
+# 2. Configurar conexión a base de datos (PostgreSQL si existe DATABASE_URL, de lo contrario SQLite autónomo)
 if [ -n "$DATABASE_URL" ] || [ -n "$DB_URL" ]; then
     export DB_CONNECTION=${DB_CONNECTION:-pgsql}
+else
+    export DB_CONNECTION=${DB_CONNECTION:-sqlite}
+    touch /app/database/database.sqlite
 fi
 
 export SESSION_DRIVER=${SESSION_DRIVER:-database}
