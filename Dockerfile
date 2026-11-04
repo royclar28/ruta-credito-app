@@ -18,6 +18,9 @@ RUN composer install --no-dev --optimize-autoloader --no-interaction --no-script
 # Copiar el código fuente completo
 COPY . .
 
+# Crear el archivo .env garantizado desde el build y generar APP_KEY
+RUN cp .env.example .env && php artisan key:generate --force
+
 # Autoloader optimizado
 RUN composer dump-autoload --optimize
 

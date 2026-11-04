@@ -1,7 +1,7 @@
 #!/bin/bash
 set -e
 
-echo "==> Iniciando Ruta de Crédito App..."
+echo "==> [$(date '+%Y-%m-%d %H:%M:%S')] Iniciando Ruta de Crédito App v1.1..."
 
 # 1. Asegurar existencia de archivo .env en el contenedor
 if [ ! -f /app/.env ]; then
@@ -21,8 +21,8 @@ fi
 export SESSION_DRIVER=${SESSION_DRIVER:-database}
 export APP_NAME=${APP_NAME:-"Ruta de Crédito"}
 
-# 3. Generar APP_KEY si no está definida
-if [ -z "$APP_KEY" ]; then
+# 3. Asegurar APP_KEY si por alguna razón no estuviera generada
+if [ -z "$APP_KEY" ] && ! grep -q "APP_KEY=base64:" /app/.env 2>/dev/null; then
     echo "==> Generando APP_KEY en tiempo de ejecución..."
     php artisan key:generate --force || true
 fi
