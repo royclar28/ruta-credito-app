@@ -17,12 +17,16 @@ fi
 if [ -n "$DATABASE_URL" ] || [ -n "$DB_URL" ]; then
     export DB_CONNECTION=${DB_CONNECTION:-pgsql}
 else
-    export DB_CONNECTION=${DB_CONNECTION:-sqlite}
+    export DB_CONNECTION=sqlite
+    export DB_DATABASE=/app/database/database.sqlite
+    mkdir -p /app/database
     touch /app/database/database.sqlite
+    chmod 777 /app/database /app/database/database.sqlite
 fi
 
-export SESSION_DRIVER=${SESSION_DRIVER:-database}
+export SESSION_DRIVER=${SESSION_DRIVER:-file}
 export APP_NAME=${APP_NAME:-"Ruta de Crédito"}
+export APP_DEBUG=${APP_DEBUG:-true}
 
 # 3. Asegurar APP_KEY si por alguna razón no estuviera generada
 if [ -z "$APP_KEY" ] && ! grep -q "APP_KEY=base64:" /app/.env 2>/dev/null; then

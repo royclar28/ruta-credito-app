@@ -24,8 +24,8 @@ RUN cp .env.example .env && php artisan key:generate --force
 # Autoloader optimizado
 RUN composer dump-autoload --optimize
 
-# Permisos requeridos por Laravel
-RUN chmod -R 777 storage bootstrap/cache
+# Permisos requeridos por Laravel y archivo sqlite inicial
+RUN mkdir -p database && touch database/database.sqlite && chmod -R 777 database storage bootstrap/cache
 
 # Configurar script de inicio
 COPY docker/entrypoint.sh /usr/local/bin/entrypoint.sh
