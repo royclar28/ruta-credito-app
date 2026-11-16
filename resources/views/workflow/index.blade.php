@@ -5,12 +5,15 @@
     
     <!-- Header de la Bandeja -->
     <div class="flex flex-col lg:flex-row items-start lg:items-center justify-between gap-4">
-        <div>
-            <div class="flex items-center gap-2">
-                <span class="text-[10px] font-bold uppercase tracking-wider text-amber-700 bg-amber-50 border border-amber-200 px-2 py-0.5 rounded-full">BANFANB • Ruta de Crédito</span>
+        <div class="flex items-center gap-3.5">
+            <img src="{{ asset('images/banfanb/banfanb_icon.png') }}" alt="BANFANB" class="w-12 h-12 rounded-xl shadow-sm border border-amber-400/30 shrink-0">
+            <div>
+                <div class="flex items-center gap-2">
+                    <span class="text-[10px] font-bold uppercase tracking-wider text-amber-700 bg-amber-50 border border-amber-200 px-2 py-0.5 rounded-full">BANFANB • Ruta de Crédito</span>
+                </div>
+                <h2 class="text-xl font-bold text-slate-900 tracking-tight mt-1">{{ $currentQueueTitle }}</h2>
+                <p class="text-xs text-slate-500 mt-0.5">Gestión operativa, transiciones de workflow y acciones masivas.</p>
             </div>
-            <h2 class="text-xl font-bold text-slate-900 tracking-tight mt-1">{{ $currentQueueTitle }}</h2>
-            <p class="text-xs text-slate-500 mt-0.5">Gestión operativa, transiciones de workflow y acciones masivas.</p>
         </div>
 
         <div class="flex flex-wrap items-center gap-3">

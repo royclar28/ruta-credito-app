@@ -27,6 +27,7 @@
         <!-- Encabezado Oficial BANFANB -->
         <div class="border-b-2 border-slate-900 pb-6 mb-6 flex items-start justify-between">
             <div class="flex items-center gap-4">
+                <img src="{{ asset('images/banfanb/banfanb_icon.png') }}" alt="BANFANB" class="w-12 h-12 rounded-xl object-contain shadow-sm shrink-0">
                 <img src="{{ asset('images/banfanb/banfanb_logo_transparent.png') }}" alt="BANFANB" class="h-10 object-contain">
                 <div>
                     <h1 class="text-base font-extrabold uppercase tracking-tight text-slate-900">Banco de la Fuerza Armada Nacional Bolivariana</h1>

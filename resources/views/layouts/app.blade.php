@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="csrf-token" content="{{ csrf_token() }}">
     <title>{{ $title ?? 'Ruta de Crédito' }} - BANFANB</title>
-    <link rel="icon" type="image/png" href="{{ asset('images/banfanb/banfanb_logo_transparent.png') }}">
+    <link rel="icon" type="image/png" href="{{ asset('images/banfanb/banfanb_favicon.png') }}">
 
     <!-- Tailwind CSS & Inter Font -->
     <script src="https://cdn.tailwindcss.com"></script>
@@ -71,11 +71,12 @@
             
             <div class="flex flex-col h-full">
                 <!-- Branding Header BANFANB -->
-                <div class="h-20 flex items-center justify-between px-6 bg-slate-950/70 border-b border-slate-800/80">
-                    <div class="flex items-center gap-2">
-                        <img src="{{ asset('images/banfanb/banfanb_logo_white.png') }}" alt="BANFANB" class="h-8 max-w-[155px] object-contain">
+                <div class="h-20 flex items-center justify-between px-5 bg-slate-950/70 border-b border-slate-800/80">
+                    <div class="flex items-center gap-2.5 min-w-0">
+                        <img src="{{ asset('images/banfanb/banfanb_icon.png') }}" alt="BANFANB" class="w-10 h-10 rounded-xl shadow-md border border-amber-400/30 shrink-0">
+                        <img src="{{ asset('images/banfanb/banfanb_logo_white.png') }}" alt="BANFANB" class="h-8 max-w-[140px] object-contain">
                     </div>
-                    <span class="text-[9px] font-extrabold uppercase tracking-widest text-amber-400 bg-amber-400/10 border border-amber-400/30 px-2 py-0.5 rounded shadow-sm">Crédito</span>
+                    <span class="text-[9px] font-extrabold uppercase tracking-widest text-amber-400 bg-amber-400/10 border border-amber-400/30 px-2 py-0.5 rounded shadow-sm shrink-0">Crédito</span>
                 </div>
 
                 <!-- Menú Principal -->

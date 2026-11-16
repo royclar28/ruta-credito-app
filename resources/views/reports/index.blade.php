@@ -5,9 +5,15 @@
     
     <!-- Header -->
     <div class="flex items-center justify-between">
-        <div>
-            <h2 class="text-xl font-bold text-slate-900 tracking-tight">Centro de Reportes y Descargas</h2>
-            <p class="text-xs text-slate-500 mt-1">Generación de archivos consolidados en formato CSV (compatible Excel UTF-8) y expedientes.</p>
+        <div class="flex items-center gap-3.5">
+            <img src="{{ asset('images/banfanb/banfanb_icon.png') }}" alt="BANFANB" class="w-12 h-12 rounded-xl shadow-sm border border-amber-400/30 shrink-0">
+            <div>
+                <div class="flex items-center gap-2">
+                    <span class="text-[10px] font-bold uppercase tracking-wider text-amber-700 bg-amber-50 border border-amber-200 px-2 py-0.5 rounded-full">BANFANB • Gerencia de Crédito</span>
+                </div>
+                <h2 class="text-xl font-bold text-slate-900 tracking-tight mt-1">Centro de Reportes y Descargas</h2>
+                <p class="text-xs text-slate-500 mt-0.5">Generación de archivos consolidados en formato CSV (compatible Excel UTF-8) y expedientes.</p>
+            </div>
         </div>
     </div>
 

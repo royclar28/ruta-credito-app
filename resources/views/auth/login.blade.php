@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Iniciar Sesión - BANFANB Ruta de Crédito</title>
-    <link rel="icon" type="image/png" href="{{ asset('images/banfanb/banfanb_logo_transparent.png') }}">
+    <link rel="icon" type="image/png" href="{{ asset('images/banfanb/banfanb_favicon.png') }}">
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
     <script src="https://unpkg.com/lucide@latest"></script>
@@ -31,9 +31,12 @@
         <!-- Panel Izquierdo: Formulario -->
         <div class="p-8 md:p-10 flex flex-col justify-between">
             <div>
-                <div class="mb-6 flex items-center justify-between">
-                    <img src="{{ asset('images/banfanb/banfanb_logo_white.png') }}" alt="BANFANB" class="h-9 object-contain">
-                    <span class="text-[10px] font-bold uppercase tracking-wider text-amber-400 bg-amber-400/10 border border-amber-400/30 px-2 py-0.5 rounded">Ruta de Crédito</span>
+                <div class="mb-6 flex items-center justify-between gap-3">
+                    <div class="flex items-center gap-3">
+                        <img src="{{ asset('images/banfanb/banfanb_icon.png') }}" alt="BANFANB Icon" class="w-12 h-12 rounded-2xl shadow-lg border border-amber-400/30 shrink-0">
+                        <img src="{{ asset('images/banfanb/banfanb_logo_white.png') }}" alt="BANFANB" class="h-10 w-auto object-contain">
+                    </div>
+                    <span class="text-[10px] font-bold uppercase tracking-wider text-amber-400 bg-amber-400/10 border border-amber-400/30 px-2.5 py-1 rounded-lg shrink-0">Ruta de Crédito</span>
                 </div>
 
                 <h2 class="text-2xl font-bold text-white mb-1">Acceso al Sistema</h2>

@@ -8,9 +8,7 @@
     <!-- Header & Breadcrumbs con Branding Institucional -->
     <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 bg-white p-6 rounded-2xl border border-slate-200 shadow-sm">
         <div class="flex items-center gap-4">
-            <div class="w-12 h-12 rounded-xl bg-gradient-to-tr from-amber-600 via-yellow-600 to-amber-500 flex items-center justify-center text-white shadow-md shadow-amber-500/20">
-                <i data-lucide="file-plus-2" class="w-6 h-6"></i>
-            </div>
+            <img src="{{ asset('images/banfanb/banfanb_icon.png') }}" alt="BANFANB" class="w-14 h-14 rounded-2xl shadow-md border border-amber-400/30 shrink-0">
             <div>
                 <div class="flex items-center gap-2">
                     <span class="text-xs font-bold uppercase tracking-wider text-amber-700 bg-amber-50 border border-amber-200 px-2 py-0.5 rounded-full">BANFANB • Custodia de Expedientes</span>

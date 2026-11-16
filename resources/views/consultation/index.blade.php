@@ -5,10 +5,15 @@
     
     <!-- Hero / Buscador -->
     <div class="bg-gradient-to-r from-slate-900 to-brand-950 rounded-3xl p-8 text-white shadow-xl relative overflow-hidden">
-        <div class="max-w-xl">
-            <span class="text-xs font-bold uppercase tracking-wider text-brand-400 block mb-2">Trazabilidad y Cumplimiento</span>
-            <h2 class="text-2xl font-extrabold tracking-tight mb-2">Consulta de Solicitud de Crédito</h2>
-            <p class="text-xs text-slate-300 mb-6">Ingresa el número de expediente o la identificación del cliente para consultar la auditoría cronológica inmutable.</p>
+        <div class="flex flex-col md:flex-row md:items-center justify-between gap-6 mb-6">
+            <div class="max-w-xl">
+                <div class="flex items-center gap-2 mb-2">
+                    <span class="text-[10px] font-extrabold uppercase tracking-wider text-amber-400 bg-amber-400/10 border border-amber-400/20 px-2 py-0.5 rounded-full">BANFANB • Auditoría y Trazabilidad</span>
+                </div>
+                <h2 class="text-2xl font-extrabold tracking-tight mb-2">Consulta de Solicitud de Crédito</h2>
+                <p class="text-xs text-slate-300">Ingresa el número de expediente o la identificación del cliente para consultar la auditoría cronológica inmutable.</p>
+            </div>
+            <img src="{{ asset('images/banfanb/banfanb_icon.png') }}" alt="BANFANB" class="w-16 h-16 rounded-2xl shadow-lg border border-amber-400/30 hidden md:block shrink-0">
         </div>
 
         <form method="GET" action="{{ route('consultation.index') }}" class="relative max-w-2xl">

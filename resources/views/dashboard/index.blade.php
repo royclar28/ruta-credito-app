@@ -6,9 +6,7 @@
     <!-- Banner de Acción Ejecutiva BANFANB -->
     <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 bg-gradient-to-r from-slate-900 via-slate-800 to-brand-950 p-6 rounded-2xl text-white shadow-lg shadow-slate-950/20 border border-slate-800">
         <div class="flex items-center gap-4">
-            <div class="w-12 h-12 rounded-xl bg-amber-500/20 border border-amber-500/30 flex items-center justify-center text-amber-400">
-                <i data-lucide="bar-chart-3" class="w-6 h-6"></i>
-            </div>
+            <img src="{{ asset('images/banfanb/banfanb_icon.png') }}" alt="BANFANB" class="w-14 h-14 rounded-2xl shadow-lg border border-amber-400/40 shrink-0">
             <div>
                 <div class="flex items-center gap-2">
                     <span class="text-[10px] font-extrabold uppercase tracking-wider text-amber-400 bg-amber-400/10 border border-amber-400/20 px-2 py-0.5 rounded-full">BANFANB • Control de Gestión</span>
