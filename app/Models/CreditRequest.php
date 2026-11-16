@@ -78,6 +78,11 @@ class CreditRequest extends Model
         return $this->belongsTo(CreditStatus::class, 'current_status_id');
     }
 
+    public function status(): BelongsTo
+    {
+        return $this->currentStatus();
+    }
+
     public function assignedUser(): BelongsTo
     {
         return $this->belongsTo(User::class, 'assigned_user_id');
