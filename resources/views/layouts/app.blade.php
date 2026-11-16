@@ -71,12 +71,11 @@
             
             <div class="flex flex-col h-full">
                 <!-- Branding Header BANFANB -->
-                <div class="h-20 flex items-center justify-between px-5 bg-slate-950/70 border-b border-slate-800/80">
-                    <div class="flex items-center gap-2.5 min-w-0">
-                        <img src="{{ asset('images/banfanb/banfanb_icon.png') }}" alt="BANFANB" class="w-10 h-10 rounded-xl shadow-md border border-amber-400/30 shrink-0">
-                        <img src="{{ asset('images/banfanb/banfanb_logo_white.png') }}" alt="BANFANB" class="h-8 max-w-[140px] object-contain">
-                    </div>
-                    <span class="text-[9px] font-extrabold uppercase tracking-widest text-amber-400 bg-amber-400/10 border border-amber-400/30 px-2 py-0.5 rounded shadow-sm shrink-0">Crédito</span>
+                <div class="h-20 flex items-center justify-between px-6 bg-slate-950/70 border-b border-slate-800/80">
+                    <a href="{{ route('dashboard') }}" class="flex items-center">
+                        <img src="{{ asset('images/banfanb/banfanb_logo_white.png') }}" alt="BANFANB" class="h-9 w-auto max-w-[170px] object-contain">
+                    </a>
+                    <span class="text-[9px] font-extrabold uppercase tracking-widest text-amber-400 bg-amber-400/10 border border-amber-400/30 px-2.5 py-1 rounded-md shadow-sm shrink-0">Crédito</span>
                 </div>
 
                 <!-- Menú Principal -->

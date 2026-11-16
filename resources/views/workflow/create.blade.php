@@ -5,30 +5,32 @@
 @section('content')
 <div x-data="creditForm()" class="space-y-6">
 
-    <!-- Header & Breadcrumbs con Branding Institucional -->
-    <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 bg-white p-6 rounded-2xl border border-slate-200 shadow-sm">
+    <!-- Header & Breadcrumbs con Branding Institucional BANFANB -->
+    <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 bg-white p-6 rounded-2xl border border-slate-200/90 shadow-sm">
         <div class="flex items-center gap-4">
-            <img src="{{ asset('images/banfanb/banfanb_icon.png') }}" alt="BANFANB" class="w-14 h-14 rounded-2xl shadow-md border border-amber-400/30 shrink-0">
+            <div class="w-13 h-13 rounded-2xl bg-gradient-to-tr from-amber-500 via-amber-600 to-yellow-600 flex items-center justify-center text-slate-950 font-bold shadow-lg shadow-amber-500/20 shrink-0 p-3">
+                <i data-lucide="file-plus-2" class="w-7 h-7 text-slate-950"></i>
+            </div>
             <div>
-                <div class="flex items-center gap-2">
-                    <span class="text-xs font-bold uppercase tracking-wider text-amber-700 bg-amber-50 border border-amber-200 px-2 py-0.5 rounded-full">BANFANB • Custodia de Expedientes</span>
-                    <span class="text-xs font-mono font-bold text-slate-500">Ref: {{ $suggestedCode }}</span>
+                <div class="flex flex-wrap items-center gap-2">
+                    <span class="text-xs font-extrabold uppercase tracking-wider text-amber-800 bg-amber-50 border border-amber-200 px-2.5 py-0.5 rounded-full">BANFANB • AGENCIA BANCARIA</span>
+                    <span class="text-xs font-mono font-bold text-slate-500 bg-slate-100 px-2 py-0.5 rounded-md border border-slate-200">Ref: {{ $suggestedCode }}</span>
                 </div>
-                <h1 class="text-2xl font-bold tracking-tight text-slate-900 mt-1">Apertura y Registro de Expediente</h1>
-                <p class="text-xs text-slate-500">Ingreso inicial de carpeta física en agencia y activación de tracking bancario.</p>
+                <h1 class="text-2xl font-black tracking-tight text-slate-900 mt-1">Apertura y Registro de Expediente</h1>
+                <p class="text-xs text-slate-500">Ingreso de carpeta física en taquilla bancaria y activación de tracking con trazabilidad inmutable.</p>
             </div>
         </div>
 
         <div class="flex items-center gap-3">
-            <a href="{{ route('workflow.index') }}" class="inline-flex items-center gap-2 px-4 py-2.5 rounded-xl border border-slate-200 text-xs font-semibold text-slate-600 bg-white hover:bg-slate-50 transition-colors shadow-sm">
-                <i data-lucide="arrow-left" class="w-4 h-4"></i>
+            <a href="{{ route('workflow.index') }}" class="inline-flex items-center gap-2 px-4 py-2.5 rounded-xl border border-slate-300 text-xs font-bold text-slate-700 bg-white hover:bg-slate-50 transition-colors shadow-sm">
+                <i data-lucide="arrow-left" class="w-4 h-4 text-slate-500"></i>
                 <span>Volver a Bandejas</span>
             </a>
         </div>
     </div>
 
     @if (isset($errors) && $errors->any())
-        <div class="p-4 rounded-2xl bg-rose-50 border border-rose-200 text-rose-800 text-sm">
+        <div class="p-4 rounded-2xl bg-rose-50 border border-rose-200 text-rose-800 text-sm shadow-sm">
             <div class="flex items-center gap-2 font-bold mb-1">
                 <i data-lucide="alert-triangle" class="w-4 h-4 text-rose-600"></i>
                 <span>Por favor corrige los siguientes errores:</span>
@@ -52,20 +54,24 @@
             <div class="lg:col-span-2 space-y-6">
 
                 <!-- 1. IDENTIFICACIÓN DEL CLIENTE / SOLICITANTE -->
-                <div class="bg-white rounded-2xl border border-slate-200 p-6 shadow-sm space-y-5">
+                <div class="bg-white rounded-2xl border border-slate-200/90 p-6 shadow-sm space-y-5">
                     <div class="flex items-center justify-between border-b border-slate-100 pb-3">
                         <div class="flex items-center gap-2.5">
-                            <i data-lucide="user-check" class="w-5 h-5 text-brand-600"></i>
-                            <h2 class="text-base font-bold text-slate-900">1. Identificación del Solicitante</h2>
+                            <div class="w-8 h-8 rounded-lg bg-blue-50 text-blue-700 flex items-center justify-center font-bold">
+                                <i data-lucide="user-check" class="w-4 h-4"></i>
+                            </div>
+                            <div>
+                                <h2 class="text-base font-extrabold text-slate-900">1. Identificación del Solicitante</h2>
+                                <p class="text-[11px] text-slate-500">Datos del titular de la solicitud de crédito</p>
+                            </div>
                         </div>
-                        <span class="text-xs text-slate-400 font-medium">Búsqueda automática en padrón</span>
                     </div>
 
-                    <!-- Tipo y Cédula/RIF con Búsqueda -->
+                    <!-- Tipo Doc, Cédula/RIF y Tipo Cliente -->
                     <div class="grid grid-cols-1 sm:grid-cols-12 gap-4">
                         <div class="sm:col-span-3">
                             <label class="block text-xs font-bold text-slate-700 uppercase tracking-wider mb-1.5">Tipo Doc.</label>
-                            <select name="document_type" x-model="docType" class="w-full text-sm rounded-xl border-slate-200 bg-slate-50 focus:bg-white focus:border-brand-500 focus:ring-brand-500">
+                            <select name="document_type" x-model="docType" class="w-full text-sm font-semibold rounded-xl border border-slate-300 bg-white px-3 py-2.5 text-slate-800 focus:outline-none focus:ring-2 focus:ring-amber-500/20 focus:border-amber-600 shadow-sm transition-all">
                                 <option value="V">V - Venezolano</option>
                                 <option value="J">J - Jurídico / Empresa</option>
                                 <option value="E">E - Extranjero</option>
@@ -73,91 +79,91 @@
                             </select>
                         </div>
 
-                        <div class="sm:col-span-6">
+                        <div class="sm:col-span-5">
                             <label class="block text-xs font-bold text-slate-700 uppercase tracking-wider mb-1.5">Número de Cédula o RIF</label>
-                            <div class="relative">
-                                <input type="text" name="document_number" x-model="docNumber" @keydown.enter.prevent="lookupCustomer()"
-                                       placeholder="Ej: 12345678 o 301234567" 
-                                       class="w-full text-sm rounded-xl border-slate-200 bg-slate-50 focus:bg-white focus:border-brand-500 focus:ring-brand-500 font-mono pr-20" required>
-                                <button type="button" @click="lookupCustomer()" 
-                                        class="absolute right-1.5 top-1.5 px-3 py-1 bg-brand-600 text-white text-xs font-bold rounded-lg hover:bg-brand-700 transition flex items-center gap-1 shadow-sm">
-                                    <i data-lucide="search" class="w-3.5 h-3.5"></i>
-                                    <span x-text="searching ? '...' : 'Buscar'"></span>
-                                </button>
-                            </div>
+                            <input type="text" name="document_number" x-model="docNumber"
+                                   placeholder="Ej: 12345678 o 301234567" 
+                                   class="w-full text-sm font-semibold rounded-xl border border-slate-300 bg-white px-3.5 py-2.5 text-slate-900 placeholder:text-slate-400 placeholder:font-normal font-mono focus:outline-none focus:ring-2 focus:ring-amber-500/20 focus:border-amber-600 shadow-sm transition-all" required>
                         </div>
 
-                        <div class="sm:col-span-3">
+                        <div class="sm:col-span-4">
                             <label class="block text-xs font-bold text-slate-700 uppercase tracking-wider mb-1.5">Tipo Cliente</label>
-                            <select name="customer_type" x-model="customerType" class="w-full text-sm rounded-xl border-slate-200 bg-slate-50 focus:bg-white focus:border-brand-500 focus:ring-brand-500 font-semibold">
-                                <option value="NATURAL">Persona Natural</option>
-                                <option value="JURIDICO">Persona Jurídica</option>
+                            <select name="customer_type" x-model="customerType" class="w-full text-sm font-semibold rounded-xl border border-slate-300 bg-white px-3 py-2.5 text-slate-800 focus:outline-none focus:ring-2 focus:ring-amber-500/20 focus:border-amber-600 shadow-sm transition-all">
+                                <option value="JURIDICO">Persona Jurídica (Empresa)</option>
+                                <option value="NATURAL">Persona Natural (Firma / Persona)</option>
                             </select>
                         </div>
-                    </div>
-
-                    <!-- Mensaje de cliente encontrado o nuevo -->
-                    <div x-show="customerFound" x-cloak class="p-3 bg-emerald-50 border border-emerald-200 rounded-xl flex items-center justify-between text-xs text-emerald-800">
-                        <div class="flex items-center gap-2">
-                            <i data-lucide="check-circle-2" class="w-4 h-4 text-emerald-600"></i>
-                            <span><strong>Cliente registrado en el sistema:</strong> Expediente previo localizado.</span>
-                        </div>
-                        <span class="font-mono text-[11px] bg-white px-2 py-0.5 rounded border border-emerald-300 font-semibold" x-text="docType + '-' + docNumber"></span>
                     </div>
 
                     <!-- Razón Social o Nombre Completo -->
                     <div>
                         <label class="block text-xs font-bold text-slate-700 uppercase tracking-wider mb-1.5">Nombre Completo o Razón Social</label>
-                        <input type="text" name="business_name" x-model="businessName" placeholder="Ej: AGROPECUARIA LOS MONOLITOS C.A. o JUAN PÉREZ" 
-                               class="w-full text-sm rounded-xl border-slate-200 bg-slate-50 focus:bg-white focus:border-brand-500 focus:ring-brand-500 uppercase font-semibold" required>
+                        <input type="text" name="business_name" x-model="businessName" placeholder="EJ: INVERSIONES BANFANB C.A. O JUAN CARLOS PÉREZ" 
+                               class="w-full text-sm font-bold rounded-xl border border-slate-300 bg-white px-3.5 py-2.5 text-slate-900 placeholder:text-slate-400 placeholder:font-normal uppercase focus:outline-none focus:ring-2 focus:ring-amber-500/20 focus:border-amber-600 shadow-sm transition-all" required>
                     </div>
 
                     <!-- Contacto: Teléfono, Email y Estado -->
-                    <div class="grid grid-cols-1 sm:grid-cols-3 gap-4">
-                        <div>
-                            <label class="block text-xs font-bold text-slate-700 uppercase tracking-wider mb-1.5">Teléfono Principal</label>
-                            <input type="text" name="phone" x-model="phone" placeholder="0414-1234567 / 0212-..." 
-                                   class="w-full text-sm rounded-xl border-slate-200 bg-slate-50 focus:bg-white focus:border-brand-500 focus:ring-brand-500">
-                        </div>
-
-                        <div>
+                    <div class="grid grid-cols-1 sm:grid-cols-12 gap-4">
+                        <div class="sm:col-span-6">
                             <label class="block text-xs font-bold text-slate-700 uppercase tracking-wider mb-1.5">Correo Electrónico</label>
-                            <input type="email" name="email" x-model="email" placeholder="cliente@correo.com" 
-                                   class="w-full text-sm rounded-xl border-slate-200 bg-slate-50 focus:bg-white focus:border-brand-500 focus:ring-brand-500">
+                            <div class="relative">
+                                <i data-lucide="mail" class="w-4 h-4 text-slate-400 absolute left-3.5 top-3"></i>
+                                <input type="email" name="email" x-model="email" placeholder="cliente@correo.com" 
+                                       class="w-full text-sm font-medium rounded-xl border border-slate-300 bg-white pl-10 pr-3.5 py-2.5 text-slate-800 placeholder:text-slate-400 focus:outline-none focus:ring-2 focus:ring-amber-500/20 focus:border-amber-600 shadow-sm transition-all">
+                            </div>
                         </div>
 
-                        <div>
+                        <div class="sm:col-span-6">
+                            <label class="block text-xs font-bold text-slate-700 uppercase tracking-wider mb-1.5">Teléfono Principal</label>
+                            <div class="relative">
+                                <i data-lucide="phone" class="w-4 h-4 text-slate-400 absolute left-3.5 top-3"></i>
+                                <input type="text" name="phone" x-model="phone" placeholder="0414-1234567 / 0212-..." 
+                                       class="w-full text-sm font-medium rounded-xl border border-slate-300 bg-white pl-10 pr-3.5 py-2.5 text-slate-800 placeholder:text-slate-400 focus:outline-none focus:ring-2 focus:ring-amber-500/20 focus:border-amber-600 shadow-sm transition-all">
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Estado Geográfico y Dirección Fiscal -->
+                    <div class="grid grid-cols-1 sm:grid-cols-12 gap-4">
+                        <div class="sm:col-span-4">
                             <label class="block text-xs font-bold text-slate-700 uppercase tracking-wider mb-1.5">Estado Geográfico</label>
-                            <select name="state_id" x-model="stateId" class="w-full text-sm rounded-xl border-slate-200 bg-slate-50 focus:bg-white focus:border-brand-500 focus:ring-brand-500">
+                            <select name="state_id" x-model="stateId" class="w-full text-sm font-semibold rounded-xl border border-slate-300 bg-white px-3 py-2.5 text-slate-800 focus:outline-none focus:ring-2 focus:ring-amber-500/20 focus:border-amber-600 shadow-sm transition-all">
                                 @foreach($states as $st)
                                     <option value="{{ $st->id }}" {{ $st->id == 2 ? 'selected' : '' }}>{{ $st->name }} ({{ $st->region->name ?? 'Nacional' }})</option>
                                 @endforeach
                             </select>
                         </div>
-                    </div>
 
-                    <div>
-                        <label class="block text-xs font-bold text-slate-700 uppercase tracking-wider mb-1.5">Dirección Fiscal / Habitación</label>
-                        <input type="text" name="address" x-model="address" placeholder="Av. Principal, Edif. / Casa..." 
-                               class="w-full text-sm rounded-xl border-slate-200 bg-slate-50 focus:bg-white focus:border-brand-500 focus:ring-brand-500">
+                        <div class="sm:col-span-8">
+                            <label class="block text-xs font-bold text-slate-700 uppercase tracking-wider mb-1.5">Dirección Fiscal / Domicilio</label>
+                            <div class="relative">
+                                <i data-lucide="map-pin" class="w-4 h-4 text-slate-400 absolute left-3.5 top-3"></i>
+                                <input type="text" name="address" x-model="address" placeholder="Av. Principal, Edificio / Casa, Municipio, Ciudad..." 
+                                       class="w-full text-sm font-medium rounded-xl border border-slate-300 bg-white pl-10 pr-3.5 py-2.5 text-slate-800 placeholder:text-slate-400 focus:outline-none focus:ring-2 focus:ring-amber-500/20 focus:border-amber-600 shadow-sm transition-all">
+                            </div>
+                        </div>
                     </div>
                 </div>
 
                 <!-- 2. DATOS FINANCIEROS Y CREDITICIOS -->
-                <div class="bg-white rounded-2xl border border-slate-200 p-6 shadow-sm space-y-5">
+                <div class="bg-white rounded-2xl border border-slate-200/90 p-6 shadow-sm space-y-5">
                     <div class="flex items-center justify-between border-b border-slate-100 pb-3">
                         <div class="flex items-center gap-2.5">
-                            <i data-lucide="badge-dollar-sign" class="w-5 h-5 text-amber-600"></i>
-                            <h2 class="text-base font-bold text-slate-900">2. Información Financiera del Crédito</h2>
+                            <div class="w-8 h-8 rounded-lg bg-amber-50 text-amber-700 flex items-center justify-center font-bold">
+                                <i data-lucide="badge-dollar-sign" class="w-4 h-4"></i>
+                            </div>
+                            <div>
+                                <h2 class="text-base font-extrabold text-slate-900">2. Información Financiera del Crédito</h2>
+                                <p class="text-[11px] text-slate-500">Parámetros de colocación y cálculo de indexación UVC</p>
+                            </div>
                         </div>
-                        <span class="text-xs text-slate-400 font-medium">Parámetros de colocación</span>
                     </div>
 
                     <!-- Producto y Subproducto Dinámico -->
                     <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
                         <div>
                             <label class="block text-xs font-bold text-slate-700 uppercase tracking-wider mb-1.5">Producto Bancario</label>
-                            <select name="product_id" x-model="productId" @change="onProductChange()" class="w-full text-sm rounded-xl border-slate-200 bg-slate-50 focus:bg-white focus:border-brand-500 focus:ring-brand-500 font-semibold" required>
+                            <select name="product_id" x-model="productId" @change="onProductChange()" class="w-full text-sm font-bold rounded-xl border border-slate-300 bg-white px-3 py-2.5 text-slate-900 focus:outline-none focus:ring-2 focus:ring-amber-500/20 focus:border-amber-600 shadow-sm transition-all" required>
                                 @foreach($products as $prod)
                                     <option value="{{ $prod->id }}">{{ $prod->name }} ({{ $prod->code }})</option>
                                 @endforeach
@@ -166,7 +172,7 @@
 
                         <div>
                             <label class="block text-xs font-bold text-slate-700 uppercase tracking-wider mb-1.5">Subproducto Especializado</label>
-                            <select name="subproduct_id" x-model="subproductId" class="w-full text-sm rounded-xl border-slate-200 bg-slate-50 focus:bg-white focus:border-brand-500 focus:ring-brand-500">
+                            <select name="subproduct_id" x-model="subproductId" class="w-full text-sm font-semibold rounded-xl border border-slate-300 bg-white px-3 py-2.5 text-slate-800 focus:outline-none focus:ring-2 focus:ring-amber-500/20 focus:border-amber-600 shadow-sm transition-all">
                                 <option value="">-- Sin subproducto específico --</option>
                                 <template x-for="sp in filteredSubproducts" :key="sp.id">
                                     <option :value="sp.id" x-text="sp.name"></option>
@@ -179,7 +185,7 @@
                     <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
                         <div>
                             <label class="block text-xs font-bold text-slate-700 uppercase tracking-wider mb-1.5">Modalidad de Financiamiento</label>
-                            <select name="modality_id" class="w-full text-sm rounded-xl border-slate-200 bg-slate-50 focus:bg-white focus:border-brand-500 focus:ring-brand-500">
+                            <select name="modality_id" class="w-full text-sm font-semibold rounded-xl border border-slate-300 bg-white px-3 py-2.5 text-slate-800 focus:outline-none focus:ring-2 focus:ring-amber-500/20 focus:border-amber-600 shadow-sm transition-all">
                                 @foreach($modalities as $mod)
                                     <option value="{{ $mod->id }}">{{ $mod->name }} ({{ $mod->type }})</option>
                                 @endforeach
@@ -189,52 +195,70 @@
                         <div>
                             <label class="block text-xs font-bold text-slate-700 uppercase tracking-wider mb-1.5">Destino Específico del Crédito</label>
                             <input type="text" name="destination" placeholder="Ej: Adquisición de materia prima, inventario o equipos" 
-                                   class="w-full text-sm rounded-xl border-slate-200 bg-slate-50 focus:bg-white focus:border-brand-500 focus:ring-brand-500">
+                                   class="w-full text-sm font-medium rounded-xl border border-slate-300 bg-white px-3.5 py-2.5 text-slate-800 placeholder:text-slate-400 focus:outline-none focus:ring-2 focus:ring-amber-500/20 focus:border-amber-600 shadow-sm transition-all">
                         </div>
                     </div>
 
-                    <!-- Monto, Moneda y Cálculo UVC -->
-                    <div class="p-4 bg-slate-50/80 rounded-2xl border border-slate-200/80 space-y-4">
+                    <!-- Contenedor Financiero: Monto, Moneda y Conversión UVC -->
+                    <div class="bg-slate-50/80 rounded-2xl border border-slate-200/90 p-5 space-y-4">
                         <div class="grid grid-cols-1 sm:grid-cols-12 gap-4 items-end">
                             <div class="sm:col-span-5">
                                 <label class="block text-xs font-bold text-slate-700 uppercase tracking-wider mb-1.5">Monto Solicitado</label>
                                 <div class="relative">
-                                    <span class="absolute left-3.5 top-2.5 text-slate-400 font-bold text-sm" x-text="currency === 'USD' ? '$' : 'Bs.'"></span>
+                                    <span class="absolute left-3.5 top-2.5 text-slate-400 font-bold text-base" x-text="currency === 'USD' ? '$' : 'Bs.'"></span>
                                     <input type="number" step="0.01" min="1" name="requested_amount" x-model.number="requestedAmount" @input="calculateUvc()"
-                                           placeholder="0.00" class="w-full pl-10 text-base font-extrabold rounded-xl border-slate-200 bg-white focus:border-brand-500 focus:ring-brand-500 font-mono text-slate-900" required>
+                                           placeholder="0.00" class="w-full pl-10 pr-3 py-2 text-lg font-black rounded-xl border border-slate-300 bg-white focus:outline-none focus:ring-2 focus:ring-amber-500/20 focus:border-amber-600 font-mono text-slate-900 shadow-sm" required>
                                 </div>
                             </div>
 
                             <div class="sm:col-span-3">
                                 <label class="block text-xs font-bold text-slate-700 uppercase tracking-wider mb-1.5">Moneda</label>
-                                <select name="currency" x-model="currency" @change="calculateUvc()" class="w-full text-sm rounded-xl border-slate-200 bg-white focus:border-brand-500 focus:ring-brand-500 font-bold">
-                                    <option value="VES">VES (Bolívares)</option>
+                                <select name="currency" x-model="currency" @change="calculateUvc()" class="w-full text-sm font-bold rounded-xl border border-slate-300 bg-white px-3 py-2.5 text-slate-800 focus:outline-none focus:ring-2 focus:ring-amber-500/20 focus:border-amber-600 shadow-sm transition-all">
                                     <option value="USD">USD (Dólares)</option>
+                                    <option value="VES">VES (Bolívares)</option>
                                 </select>
                             </div>
 
                             <div class="sm:col-span-4">
-                                <label class="block text-xs font-bold text-slate-700 uppercase tracking-wider mb-1.5">Tasa Cambio BCV</label>
-                                <input type="number" step="0.0001" min="0.0001" name="exchange_rate" x-model.number="exchangeRate" @input="calculateUvc()"
-                                       class="w-full text-sm rounded-xl border-slate-200 bg-white focus:border-brand-500 focus:ring-brand-500 font-mono">
+                                <label class="block text-xs font-bold text-slate-700 uppercase tracking-wider mb-1.5">Tasa Cambio BCV / Ref.</label>
+                                <div class="relative">
+                                    <span class="absolute left-3.5 top-2.5 text-slate-400 font-bold text-xs">Bs.</span>
+                                    <input type="number" step="0.0001" min="0.0001" name="exchange_rate" x-model.number="exchangeRate" @input="calculateUvc()"
+                                           class="w-full pl-10 pr-3 py-2 text-sm font-bold rounded-xl border border-slate-300 bg-white focus:outline-none focus:ring-2 focus:ring-amber-500/20 focus:border-amber-600 font-mono text-slate-900 shadow-sm">
+                                </div>
                             </div>
                         </div>
 
-                        <!-- Card Informativa del Contravalor UVC -->
-                        <div class="flex items-center justify-between p-3.5 bg-gradient-to-r from-slate-900 to-slate-800 rounded-xl text-white">
-                            <div class="flex items-center gap-2">
-                                <i data-lucide="calculator" class="w-4 h-4 text-amber-400"></i>
-                                <span class="text-xs font-medium text-slate-300">Equivalente Indexado UVC:</span>
+                        <!-- Card Financiera Ejecutiva: Contravalor UVC -->
+                        <div class="bg-gradient-to-r from-slate-950 via-slate-900 to-slate-900 rounded-2xl p-4 sm:p-5 text-white border border-slate-800 shadow-lg">
+                            <div class="flex items-center justify-between border-b border-slate-800 pb-3 mb-3">
+                                <div class="flex items-center gap-2">
+                                    <i data-lucide="calculator" class="w-4 h-4 text-amber-400"></i>
+                                    <span class="text-xs font-bold uppercase tracking-wider text-slate-300">Indexación SUDEBAN / BCV</span>
+                                </div>
+                                <span class="text-[10px] font-bold uppercase tracking-wider bg-amber-400/10 text-amber-400 border border-amber-400/30 px-2 py-0.5 rounded">Cartera Productiva</span>
                             </div>
-                            <div class="text-right">
-                                <span class="text-base font-mono font-extrabold text-amber-400" x-text="uvcFormatted"></span>
-                                <span class="text-[11px] text-slate-400 block">Unidades de Valor de Crédito</span>
+
+                            <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3">
+                                <div>
+                                    <span class="text-xs text-slate-400 block font-medium">Monto Base Solicitado:</span>
+                                    <span class="text-lg font-bold font-mono text-white" x-text="(currency === 'USD' ? '$ ' : 'Bs. ') + Number(requestedAmount || 0).toLocaleString('es-VE', { minimumFractionDigits: 2 })"></span>
+                                </div>
+
+                                <div class="sm:text-right">
+                                    <span class="text-xs text-slate-400 block font-medium">Equivalente en UVC:</span>
+                                    <div class="flex items-baseline sm:justify-end gap-1.5">
+                                        <span class="text-2xl font-black font-mono text-amber-400 tracking-tight" x-text="uvcFormatted"></span>
+                                        <span class="text-xs font-bold text-amber-500 font-mono">UVC</span>
+                                    </div>
+                                </div>
                             </div>
+                            <p class="text-[11px] text-slate-400 mt-2.5 pt-2.5 border-t border-slate-800/80">Unidad de Valor de Crédito indexada automáticamente según normativa bancaria nacional vigente.</p>
                         </div>
 
-                        <div class="flex items-center gap-2 pt-1">
-                            <input type="checkbox" id="public_entity" name="public_entity" value="1" class="rounded border-slate-300 text-brand-600 focus:ring-brand-500 h-4 w-4">
-                            <label for="public_entity" class="text-xs font-semibold text-slate-700 select-none">El solicitante es un Ente Público, Alcaldía, Gobernación o Empresa del Estado</label>
+                        <div class="flex items-center gap-2.5 pt-1">
+                            <input type="checkbox" id="public_entity" name="public_entity" value="1" class="rounded border-slate-300 text-amber-600 focus:ring-amber-500 h-4 w-4">
+                            <label for="public_entity" class="text-xs font-semibold text-slate-700 select-none cursor-pointer">El solicitante es un Ente Público, Alcaldía, Gobernación o Empresa del Estado</label>
                         </div>
                     </div>
                 </div>
@@ -247,65 +271,74 @@
             <div class="space-y-6">
 
                 <!-- 3. CUSTODIA Y DESTINO DE LA CARPETA FÍSICA -->
-                <div class="bg-white rounded-2xl border border-slate-200 p-6 shadow-sm space-y-5">
+                <div class="bg-white rounded-2xl border border-slate-200/90 p-6 shadow-sm space-y-5">
                     <div class="flex items-center gap-2.5 border-b border-slate-100 pb-3">
-                        <i data-lucide="archive" class="w-5 h-5 text-indigo-600"></i>
-                        <h2 class="text-base font-bold text-slate-900">3. Custodia en Agencia</h2>
+                        <div class="w-8 h-8 rounded-lg bg-indigo-50 text-indigo-700 flex items-center justify-center font-bold">
+                            <i data-lucide="archive" class="w-4 h-4"></i>
+                        </div>
+                        <div>
+                            <h2 class="text-base font-extrabold text-slate-900">3. Custodia en Agencia</h2>
+                            <p class="text-[11px] text-slate-500">Recepción de carpeta física y enrutamiento</p>
+                        </div>
                     </div>
 
                     <!-- Agencia de Recepción -->
                     <div>
                         <label class="block text-xs font-bold text-slate-700 uppercase tracking-wider mb-1.5">Agencia Receptora</label>
-                        <select name="agency_id" class="w-full text-sm rounded-xl border-slate-200 bg-slate-50 focus:bg-white focus:border-brand-500 focus:ring-brand-500 font-semibold" required>
+                        <select name="agency_id" class="w-full text-sm font-semibold rounded-xl border border-slate-300 bg-white px-3 py-2.5 text-slate-900 focus:outline-none focus:ring-2 focus:ring-amber-500/20 focus:border-amber-600 shadow-sm transition-all" required>
                             @foreach($agencies as $ag)
                                 <option value="{{ $ag->id }}" {{ $ag->id == 1 ? 'selected' : '' }}>{{ $ag->name }} ({{ $ag->code }})</option>
                             @endforeach
                         </select>
-                        <span class="text-[11px] text-slate-400 mt-1 block">Sucursal donde reposa el expediente original.</span>
+                        <span class="text-[11px] text-slate-400 mt-1 block">Sucursal donde reposa la carpeta física original.</span>
                     </div>
 
                     <!-- Bandeja de Destino Inicial -->
                     <div>
                         <label class="block text-xs font-bold text-slate-700 uppercase tracking-wider mb-1.5">Bandeja de Destino Inicial</label>
-                        <select name="initial_status_id" x-model="initialStatusId" class="w-full text-sm rounded-xl border-slate-200 bg-slate-50 focus:bg-white focus:border-brand-500 focus:ring-brand-500 font-semibold" required>
+                        <select name="initial_status_id" x-model="initialStatusId" class="w-full text-sm font-semibold rounded-xl border border-slate-300 bg-white px-3 py-2.5 text-slate-900 focus:outline-none focus:ring-2 focus:ring-amber-500/20 focus:border-amber-600 shadow-sm transition-all" required>
                             <option value="46">G.G. Clientes Carterizados (Estatus 46)</option>
                             <option value="41">G.G. Personas y PYMES (Estatus 41)</option>
                             <option value="1">Recepción en Agencia / Custodia Local (Estatus 1)</option>
                         </select>
                     </div>
 
-                    <!-- Funcionario Revisor -->
-                    <div class="p-3 bg-slate-50 rounded-xl border border-slate-200 text-xs space-y-1">
-                        <span class="font-bold text-slate-700 block">Funcionario Receptor:</span>
-                        <div class="flex items-center gap-2 text-slate-600">
-                            <i data-lucide="user" class="w-3.5 h-3.5 text-brand-600"></i>
-                            <span>{{ Auth::user()->name ?? 'Ejecutivo de Negocios' }}</span>
+                    <!-- Funcionario Revisor Institucional -->
+                    <div class="p-3.5 bg-slate-50 rounded-xl border border-slate-200/90 text-xs space-y-1.5">
+                        <span class="font-extrabold text-slate-700 block uppercase tracking-wider text-[10px]">Funcionario Receptor:</span>
+                        <div class="flex items-center gap-2.5">
+                            <div class="w-7 h-7 rounded-full bg-slate-900 text-white flex items-center justify-center font-bold text-[11px] shrink-0">
+                                {{ strtoupper(substr(Auth::user()->name ?? 'U', 0, 1)) }}
+                            </div>
+                            <div class="min-w-0">
+                                <span class="font-bold text-slate-900 block truncate">{{ Auth::user()->name ?? 'Funcionario Bancario' }}</span>
+                                <span class="text-[11px] text-slate-500 truncate block">{{ Auth::user()->role?->name ?? 'Oficial de Crédito' }}</span>
+                            </div>
                         </div>
-                        <span class="text-[11px] text-slate-400 block">{{ Auth::user()->email ?? '' }}</span>
                     </div>
 
                     <!-- Checklist de Recaudos Físicos -->
                     <div class="space-y-2 pt-2">
                         <label class="block text-xs font-bold text-slate-700 uppercase tracking-wider">Recaudos Físicos Consignados</label>
-                        <div class="space-y-2 text-xs text-slate-600">
-                            <label class="flex items-center gap-2 cursor-pointer p-2 rounded-lg hover:bg-slate-50 border border-slate-100">
-                                <input type="checkbox" name="physical_checklists[]" value="Cédula/RIF y Poderes Vigentes" checked class="rounded border-slate-300 text-brand-600 focus:ring-brand-500">
+                        <div class="space-y-2 text-xs text-slate-700 font-medium">
+                            <label class="flex items-center gap-2.5 cursor-pointer p-2.5 rounded-xl hover:bg-slate-50 border border-slate-200 bg-white transition-colors">
+                                <input type="checkbox" name="physical_checklists[]" value="Cédula/RIF y Poderes Vigentes" checked class="rounded border-slate-300 text-amber-600 focus:ring-amber-500 h-4 w-4">
                                 <span>Cédula de Identidad / RIF y Poderes Vigentes</span>
                             </label>
-                            <label class="flex items-center gap-2 cursor-pointer p-2 rounded-lg hover:bg-slate-50 border border-slate-100">
-                                <input type="checkbox" name="physical_checklists[]" value="Balances Personales o Estados Financieros" checked class="rounded border-slate-300 text-brand-600 focus:ring-brand-500">
+                            <label class="flex items-center gap-2.5 cursor-pointer p-2.5 rounded-xl hover:bg-slate-50 border border-slate-200 bg-white transition-colors">
+                                <input type="checkbox" name="physical_checklists[]" value="Balances Personales o Estados Financieros" checked class="rounded border-slate-300 text-amber-600 focus:ring-amber-500 h-4 w-4">
                                 <span>Estados Financieros o Balances Visados</span>
                             </label>
-                            <label class="flex items-center gap-2 cursor-pointer p-2 rounded-lg hover:bg-slate-50 border border-slate-100">
-                                <input type="checkbox" name="physical_checklists[]" value="Declaración de ISLR" checked class="rounded border-slate-300 text-brand-600 focus:ring-brand-500">
+                            <label class="flex items-center gap-2.5 cursor-pointer p-2.5 rounded-xl hover:bg-slate-50 border border-slate-200 bg-white transition-colors">
+                                <input type="checkbox" name="physical_checklists[]" value="Declaración de ISLR" checked class="rounded border-slate-300 text-amber-600 focus:ring-amber-500 h-4 w-4">
                                 <span>Última Declaración de ISLR</span>
                             </label>
-                            <label class="flex items-center gap-2 cursor-pointer p-2 rounded-lg hover:bg-slate-50 border border-slate-100">
-                                <input type="checkbox" name="physical_checklists[]" value="Plan de Inversión y Presupuestos" class="rounded border-slate-300 text-brand-600 focus:ring-brand-500">
+                            <label class="flex items-center gap-2.5 cursor-pointer p-2.5 rounded-xl hover:bg-slate-50 border border-slate-200 bg-white transition-colors">
+                                <input type="checkbox" name="physical_checklists[]" value="Plan de Inversión y Presupuestos" class="rounded border-slate-300 text-amber-600 focus:ring-amber-500 h-4 w-4">
                                 <span>Plan de Inversión / Cotizaciones</span>
                             </label>
-                            <label class="flex items-center gap-2 cursor-pointer p-2 rounded-lg hover:bg-slate-50 border border-slate-100">
-                                <input type="checkbox" name="physical_checklists[]" value="Documentos de Garantía" class="rounded border-slate-300 text-brand-600 focus:ring-brand-500">
+                            <label class="flex items-center gap-2.5 cursor-pointer p-2.5 rounded-xl hover:bg-slate-50 border border-slate-200 bg-white transition-colors">
+                                <input type="checkbox" name="physical_checklists[]" value="Documentos de Garantía" class="rounded border-slate-300 text-amber-600 focus:ring-amber-500 h-4 w-4">
                                 <span>Títulos o Documentos de Garantía</span>
                             </label>
                         </div>
@@ -315,14 +348,14 @@
                     <div>
                         <label class="block text-xs font-bold text-slate-700 uppercase tracking-wider mb-1.5">Observaciones de Apertura</label>
                         <textarea name="observations" rows="3" placeholder="Detalles de la carpeta física, sellos, folios o notas del cliente..." 
-                                  class="w-full text-xs rounded-xl border-slate-200 bg-slate-50 focus:bg-white focus:border-brand-500 focus:ring-brand-500"></textarea>
+                                  class="w-full text-xs font-medium rounded-xl border border-slate-300 bg-white p-3 text-slate-800 placeholder:text-slate-400 focus:outline-none focus:ring-2 focus:ring-amber-500/20 focus:border-amber-600 shadow-sm transition-all"></textarea>
                     </div>
 
-                    <!-- Botón de Envío -->
-                    <div class="pt-3">
-                        <button type="submit" class="w-full py-3.5 px-4 rounded-xl bg-gradient-to-r from-amber-600 to-amber-700 hover:from-amber-700 hover:to-amber-800 text-white font-bold text-sm shadow-lg shadow-amber-600/30 transition-all flex items-center justify-center gap-2">
-                            <i data-lucide="check-circle" class="w-5 h-5"></i>
-                            <span>Registrar Solicitud en Tracking</span>
+                    <!-- Botón de Envío BANFANB -->
+                    <div class="pt-2">
+                        <button type="submit" class="w-full py-4 px-5 rounded-2xl bg-gradient-to-r from-amber-500 via-amber-600 to-yellow-600 hover:from-amber-600 hover:to-amber-700 text-slate-950 font-black text-sm shadow-xl shadow-amber-500/25 border border-amber-400/50 flex items-center justify-center gap-2.5 transition-all transform active:scale-[0.99] cursor-pointer">
+                            <i data-lucide="check-circle-2" class="w-5 h-5 text-slate-950"></i>
+                            <span>Registrar y Aperturar Expediente</span>
                         </button>
                     </div>
                 </div>
@@ -345,8 +378,6 @@
             email: '',
             address: '',
             stateId: 2,
-            customerFound: false,
-            searching: false,
 
             productId: 1,
             subproductId: '',
@@ -369,7 +400,7 @@
                 this.filteredSubproducts = this.allSubproducts.filter(sp => sp.product_id === pid);
                 this.subproductId = this.filteredSubproducts.length > 0 ? this.filteredSubproducts[0].id : '';
 
-                // Autoseleccionar bandeja recomendada según el producto
+                // Ajuste inteligente según el producto
                 if (pid === 5) {
                     this.initialStatusId = 46; // Carterizados
                     this.customerType = 'JURIDICO';
@@ -386,31 +417,6 @@
                 const rate = parseFloat(this.exchangeRate) || 1;
                 const uvc = rate > 0 ? (amount / rate) : amount;
                 this.uvcFormatted = new Intl.NumberFormat('es-VE', { minimumFractionDigits: 2, maximumFractionDigits: 4 }).format(uvc);
-            },
-
-            async lookupCustomer() {
-                if (!this.docNumber) return;
-                this.searching = true;
-                try {
-                    const res = await fetch(`{{ route('api.customer.search') }}?type=${this.docType}&number=${encodeURIComponent(this.docNumber.trim())}`);
-                    const data = await res.json();
-                    if (data.found && data.customer) {
-                        const c = data.customer;
-                        this.businessName = c.business_name;
-                        this.customerType = c.customer_type;
-                        this.phone = c.phone || '';
-                        this.email = c.email || '';
-                        this.address = c.address || '';
-                        if (c.state_id) this.stateId = c.state_id;
-                        this.customerFound = true;
-                    } else {
-                        this.customerFound = false;
-                    }
-                } catch (e) {
-                    console.error('Error buscando cliente:', e);
-                } finally {
-                    this.searching = false;
-                }
             }
         }
     }
