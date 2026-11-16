@@ -1,8 +1,37 @@
 @extends('layouts.app')
 
 @section('content')
-<div class="space-y-8" x-data="dashboardManager()">
+<div class="space-y-6" x-data="dashboardManager()">
     
+    <!-- Banner de Acción Ejecutiva BANFANB -->
+    <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 bg-gradient-to-r from-slate-900 via-slate-800 to-brand-950 p-6 rounded-2xl text-white shadow-lg shadow-slate-950/20 border border-slate-800">
+        <div class="flex items-center gap-4">
+            <div class="w-12 h-12 rounded-xl bg-amber-500/20 border border-amber-500/30 flex items-center justify-center text-amber-400">
+                <i data-lucide="bar-chart-3" class="w-6 h-6"></i>
+            </div>
+            <div>
+                <div class="flex items-center gap-2">
+                    <span class="text-[10px] font-extrabold uppercase tracking-wider text-amber-400 bg-amber-400/10 border border-amber-400/20 px-2 py-0.5 rounded-full">BANFANB • Control de Gestión</span>
+                </div>
+                <h2 class="text-xl font-bold tracking-tight text-white mt-1">Dashboard de Indicadores y KPIs</h2>
+                <p class="text-xs text-slate-300">Monitoreo consolidado de cartera crediticia, efectividad de aprobación y distribución geográfica.</p>
+            </div>
+        </div>
+
+        <div class="flex items-center gap-3">
+            <a href="{{ route('workflow.create') }}" 
+               class="inline-flex items-center gap-2 px-4 py-2.5 rounded-xl bg-gradient-to-r from-amber-500 to-amber-600 hover:from-amber-600 hover:to-amber-700 text-slate-950 font-bold text-xs shadow-lg shadow-amber-500/30 transition-all border border-amber-400/40">
+                <i data-lucide="plus-circle" class="w-4 h-4"></i>
+                <span>Apertura de Solicitud</span>
+            </a>
+            <a href="{{ route('reports.index') }}" 
+               class="inline-flex items-center gap-2 px-4 py-2.5 rounded-xl bg-slate-800/80 hover:bg-slate-700 text-slate-200 border border-slate-700 font-semibold text-xs transition-colors">
+                <i data-lucide="download" class="w-4 h-4 text-slate-400"></i>
+                <span>Exportar Reportes</span>
+            </a>
+        </div>
+    </div>
+
     <!-- ========================================================================= -->
     <!-- 1. BARRA DE FILTROS TERRITORIALES Y DE PRODUCTO (CASCADA) -->
     <!-- ========================================================================= -->

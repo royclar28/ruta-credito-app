@@ -24,14 +24,17 @@
             </button>
         </div>
 
-        <!-- Encabezado Oficial -->
+        <!-- Encabezado Oficial BANFANB -->
         <div class="border-b-2 border-slate-900 pb-6 mb-6 flex items-start justify-between">
-            <div>
-                <h1 class="text-xl font-extrabold uppercase tracking-tight text-slate-900">Ruta de Crédito</h1>
-                <p class="text-xs text-slate-500">Expediente Oficial de Crédito y Dictamen de Riesgo</p>
+            <div class="flex items-center gap-4">
+                <img src="{{ asset('images/banfanb/banfanb_logo_transparent.png') }}" alt="BANFANB" class="h-10 object-contain">
+                <div>
+                    <h1 class="text-base font-extrabold uppercase tracking-tight text-slate-900">Banco de la Fuerza Armada Nacional Bolivariana</h1>
+                    <p class="text-xs text-slate-500 font-medium">Hoja de Ruta y Trazabilidad de Expediente de Crédito</p>
+                </div>
             </div>
             <div class="text-right">
-                <span class="text-xs font-bold font-mono text-blue-600 block text-base">{{ $creditRequest->request_code }}</span>
+                <span class="text-xs font-bold font-mono text-amber-600 block text-base">{{ $creditRequest->request_code }}</span>
                 <span class="text-[11px] text-slate-400">Emisión: {{ date('d/m/Y H:i') }}</span>
             </div>
         </div>

@@ -258,6 +258,10 @@ class DatabaseSeeder extends Seeder
 
         // Transiciones del flujo bancario
         $transitions = [
+            // Recepción en Agencia
+            ['from' => 1, 'to' => 46, 'role' => 'gerente_agencia', 'name' => 'Enviar a Carterizados', 'type' => 'ENVIAR', 'color' => 'amber', 'icon' => 'send', 'batch' => true],
+            ['from' => 1, 'to' => 41, 'role' => 'gerente_agencia', 'name' => 'Enviar a Personas y PYMES', 'type' => 'ENVIAR', 'color' => 'sky', 'icon' => 'send', 'batch' => true],
+
             // Control a Carterizados
             ['from' => 46, 'to' => 57, 'role' => 'analista_carterizados', 'name' => 'Recibir en Carterizados', 'type' => 'RECIBIR', 'color' => 'primary', 'icon' => 'folder-open', 'batch' => true],
             ['from' => 57, 'to' => 62, 'role' => 'analista_carterizados', 'name' => 'Pasar a Análisis', 'type' => 'AVANZAR', 'color' => 'info', 'icon' => 'arrow-right', 'batch' => true],
@@ -265,6 +269,11 @@ class DatabaseSeeder extends Seeder
             ['from' => 60, 'to' => 62, 'role' => 'analista_carterizados', 'name' => 'Reanudar Análisis', 'type' => 'AVANZAR', 'color' => 'info', 'icon' => 'play', 'batch' => false],
             ['from' => 62, 'to' => 61, 'role' => 'analista_carterizados', 'name' => 'Devolver a Control y Seguimiento', 'type' => 'DEVOLVER', 'color' => 'danger', 'icon' => 'undo', 'batch' => false],
             ['from' => 62, 'to' => 58, 'role' => 'analista_carterizados', 'name' => 'Enviar a Comité de Crédito', 'type' => 'AVANZAR', 'color' => 'success', 'icon' => 'send', 'batch' => true],
+
+            // Flujo Personas y PYMES
+            ['from' => 41, 'to' => 42, 'role' => 'analista_pyme', 'name' => 'Pasar a Análisis PYME', 'type' => 'AVANZAR', 'color' => 'info', 'icon' => 'arrow-right', 'batch' => true],
+            ['from' => 42, 'to' => 49, 'role' => 'analista_pyme', 'name' => 'Enviar a Comité de Crédito', 'type' => 'AVANZAR', 'color' => 'success', 'icon' => 'send', 'batch' => true],
+            ['from' => 42, 'to' => 99, 'role' => 'analista_pyme', 'name' => 'Negar Solicitud', 'type' => 'NEGAR', 'color' => 'danger', 'icon' => 'x-circle', 'batch' => false],
 
             // Comité de Crédito
             ['from' => 58, 'to' => 49, 'role' => 'comite', 'name' => 'Recibir en Comité', 'type' => 'RECIBIR', 'color' => 'primary', 'icon' => 'folder-open', 'batch' => true],

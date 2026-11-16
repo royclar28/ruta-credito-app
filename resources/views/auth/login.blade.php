@@ -3,7 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Iniciar Sesión - Ruta de Crédito</title>
+    <title>Iniciar Sesión - BANFANB Ruta de Crédito</title>
+    <link rel="icon" type="image/png" href="{{ asset('images/banfanb/banfanb_logo_transparent.png') }}">
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
     <script src="https://unpkg.com/lucide@latest"></script>
@@ -30,18 +31,13 @@
         <!-- Panel Izquierdo: Formulario -->
         <div class="p-8 md:p-10 flex flex-col justify-between">
             <div>
-                <div class="flex items-center gap-3 mb-8">
-                    <div class="w-10 h-10 rounded-xl bg-gradient-to-tr from-brand-600 to-indigo-500 flex items-center justify-center text-white shadow-lg shadow-brand-500/20">
-                        <i data-lucide="shield-check" class="w-6 h-6"></i>
-                    </div>
-                    <div>
-                        <span class="text-lg font-bold tracking-tight text-white block">Ruta de Crédito</span>
-                        <span class="text-xs font-medium text-slate-400 uppercase tracking-wider">Acceso Corporativo</span>
-                    </div>
+                <div class="mb-6 flex items-center justify-between">
+                    <img src="{{ asset('images/banfanb/banfanb_logo_white.png') }}" alt="BANFANB" class="h-9 object-contain">
+                    <span class="text-[10px] font-bold uppercase tracking-wider text-amber-400 bg-amber-400/10 border border-amber-400/30 px-2 py-0.5 rounded">Ruta de Crédito</span>
                 </div>
 
-                <h2 class="text-2xl font-bold text-white mb-2">Bienvenido</h2>
-                <p class="text-sm text-slate-400 mb-6">Ingresa tus credenciales para acceder al sistema autónomo de crédito.</p>
+                <h2 class="text-2xl font-bold text-white mb-1">Acceso al Sistema</h2>
+                <p class="text-xs text-slate-400 mb-6">Custodia, control y trazabilidad de expedientes crediticios BANFANB.</p>
 
                 @if($errors->any())
                     <div class="mb-5 p-3.5 rounded-xl bg-rose-500/10 border border-rose-500/30 text-rose-400 text-xs">

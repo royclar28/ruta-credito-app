@@ -4,14 +4,24 @@
 <div class="space-y-6" x-data="workflowManager()">
     
     <!-- Header de la Bandeja -->
-    <div class="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
+    <div class="flex flex-col lg:flex-row items-start lg:items-center justify-between gap-4">
         <div>
-            <h2 class="text-xl font-bold text-slate-900 tracking-tight">{{ $currentQueueTitle }}</h2>
-            <p class="text-xs text-slate-500 mt-1">Gestión operativa, transiciones de workflow y acciones masivas.</p>
+            <div class="flex items-center gap-2">
+                <span class="text-[10px] font-bold uppercase tracking-wider text-amber-700 bg-amber-50 border border-amber-200 px-2 py-0.5 rounded-full">BANFANB • Ruta de Crédito</span>
+            </div>
+            <h2 class="text-xl font-bold text-slate-900 tracking-tight mt-1">{{ $currentQueueTitle }}</h2>
+            <p class="text-xs text-slate-500 mt-0.5">Gestión operativa, transiciones de workflow y acciones masivas.</p>
         </div>
 
-        <!-- Pestañas de Bandejas -->
-        <div class="flex items-center gap-1.5 p-1 bg-white border border-slate-200/80 rounded-2xl shadow-sm text-xs font-semibold overflow-x-auto max-w-full">
+        <div class="flex flex-wrap items-center gap-3">
+            <a href="{{ route('workflow.create') }}" 
+               class="inline-flex items-center gap-2 px-3.5 py-2 rounded-xl bg-gradient-to-r from-amber-500 to-amber-600 hover:from-amber-600 hover:to-amber-700 text-slate-950 font-bold text-xs shadow-md shadow-amber-500/20 transition-all border border-amber-400/30">
+                <i data-lucide="plus-circle" class="w-4 h-4"></i>
+                <span>Apertura de Solicitud</span>
+            </a>
+
+            <!-- Pestañas de Bandejas -->
+            <div class="flex items-center gap-1.5 p-1 bg-white border border-slate-200/80 rounded-2xl shadow-sm text-xs font-semibold overflow-x-auto max-w-full">
             <a href="{{ route('workflow.index', 'carterizados') }}" 
                class="px-3 py-1.5 rounded-xl transition-all {{ $queue === 'carterizados' ? 'bg-brand-600 text-white shadow-sm' : 'text-slate-600 hover:text-slate-900' }}">
                 Carterizados

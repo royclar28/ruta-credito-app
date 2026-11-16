@@ -24,3 +24,6 @@ Homestead.yaml
 Thumbs.db
 frankenphp
 storage/debugbar/
+db_ruta_credito
+*.pdf
+

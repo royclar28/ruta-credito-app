@@ -25,6 +25,9 @@ Route::middleware(['auth'])->group(function () {
 
     // 2. Bandejas de Trabajo y Gestión Operativa
     Route::get('/bandejas/{queue?}', [WorkflowController::class, 'index'])->name('workflow.index');
+    Route::get('/solicitudes/crear', [WorkflowController::class, 'create'])->name('workflow.create');
+    Route::post('/solicitudes/guardar', [WorkflowController::class, 'store'])->name('workflow.store');
+    Route::get('/api/clientes/buscar', [WorkflowController::class, 'searchCustomer'])->name('api.customer.search');
     Route::get('/solicitudes/{id}/detalles', [WorkflowController::class, 'details'])->name('workflow.details');
     Route::post('/solicitudes/transicion', [WorkflowController::class, 'transition'])->name('workflow.transition');
     Route::post('/solicitudes/transicion-masiva', [WorkflowController::class, 'batchTransition'])->name('workflow.batch_transition');

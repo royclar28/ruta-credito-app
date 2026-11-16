@@ -4,7 +4,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="csrf-token" content="{{ csrf_token() }}">
-    <title>{{ $title ?? 'Ruta de Crédito' }} - Sistema de Gestión Bancaria</title>
+    <title>{{ $title ?? 'Ruta de Crédito' }} - BANFANB</title>
+    <link rel="icon" type="image/png" href="{{ asset('images/banfanb/banfanb_logo_transparent.png') }}">
 
     <!-- Tailwind CSS & Inter Font -->
     <script src="https://cdn.tailwindcss.com"></script>
@@ -69,19 +70,25 @@
                class="fixed inset-y-0 left-0 md:static">
             
             <div class="flex flex-col h-full">
-                <!-- Branding Header -->
-                <div class="h-20 flex items-center px-6 bg-slate-950/40 border-b border-slate-800/80 gap-3">
-                    <div class="w-10 h-10 rounded-xl bg-gradient-to-tr from-brand-600 to-indigo-500 flex items-center justify-center text-white shadow-lg shadow-brand-500/20">
-                        <i data-lucide="shield-check" class="w-6 h-6"></i>
+                <!-- Branding Header BANFANB -->
+                <div class="h-20 flex items-center justify-between px-6 bg-slate-950/70 border-b border-slate-800/80">
+                    <div class="flex items-center gap-2">
+                        <img src="{{ asset('images/banfanb/banfanb_logo_white.png') }}" alt="BANFANB" class="h-8 max-w-[155px] object-contain">
                     </div>
-                    <div>
-                        <span class="text-lg font-bold tracking-tight text-white block">Ruta de Crédito</span>
-                        <span class="text-xs font-medium text-slate-400 tracking-wider uppercase">Sistema Autónomo</span>
-                    </div>
+                    <span class="text-[9px] font-extrabold uppercase tracking-widest text-amber-400 bg-amber-400/10 border border-amber-400/30 px-2 py-0.5 rounded shadow-sm">Crédito</span>
                 </div>
 
                 <!-- Menú Principal -->
-                <nav class="flex-1 px-4 py-6 space-y-1.5 overflow-y-auto">
+                <nav class="flex-1 px-4 py-5 space-y-1.5 overflow-y-auto">
+                    <!-- Botón Principal: Apertura de Solicitud -->
+                    <div class="mb-4">
+                        <a href="{{ route('workflow.create') }}" 
+                           class="flex items-center justify-center gap-2 w-full py-2.5 px-3 rounded-xl bg-gradient-to-r from-amber-500 via-amber-600 to-yellow-600 hover:from-amber-600 hover:to-amber-700 text-slate-950 font-bold text-xs shadow-lg shadow-amber-500/20 transition-all border border-amber-400/30">
+                            <i data-lucide="plus-circle" class="w-4 h-4"></i>
+                            <span>Apertura de Solicitud</span>
+                        </a>
+                    </div>
+
                     <div class="px-3 pb-2 text-[11px] font-bold uppercase tracking-wider text-slate-400">Panel Ejecutivo</div>
                     
                     <a href="{{ route('dashboard') }}" 
@@ -173,7 +180,7 @@
                     </button>
                     <div>
                         <h1 class="text-xl font-bold text-slate-900 tracking-tight leading-none">{{ $headerTitle ?? 'Ruta de Crédito' }}</h1>
-                        <p class="text-xs text-slate-500 mt-1 hidden sm:block">Plataforma Empresarial Desacoplada y Centralizada</p>
+                        <p class="text-xs text-slate-500 mt-1 hidden sm:block">BANFANB • Trazabilidad y Custodia de Expedientes</p>
                     </div>
                 </div>
 
