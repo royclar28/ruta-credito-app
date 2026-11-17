@@ -186,13 +186,21 @@ class WorkflowController extends Controller
     public function store(Request $request)
     {
         $validated = $request->validate([
-            // Datos del solicitante / cliente
-            'document_type' => 'required|in:V,J,E,G',
+            // Datos del solicitante / cliente (Esquema sisproa54)
+            'document_type' => 'required|in:V,J,E,G,R',
             'document_number' => 'required|string|max:20',
             'customer_type' => 'required|in:NATURAL,JURIDICO',
             'business_name' => 'required|string|max:200',
+            'first_name' => 'nullable|string|max:100',
+            'last_name' => 'nullable|string|max:100',
+            'birth_or_constitution_date' => 'nullable|date',
+            'gender' => 'nullable|string|max:10',
+            'economic_activity' => 'nullable|string|max:255',
+            'economic_activity_code' => 'nullable|string|max:50',
             'email' => 'nullable|email|max:150',
             'phone' => 'nullable|string|max:30',
+            'phone_mobile' => 'nullable|string|max:30',
+            'phone_alt' => 'nullable|string|max:30',
             'address' => 'nullable|string|max:255',
             'state_id' => 'required|exists:states,id',
 
@@ -204,8 +212,28 @@ class WorkflowController extends Controller
             'requested_amount' => 'required|numeric|min:0.01',
             'currency' => 'required|in:VES,USD',
             'exchange_rate' => 'nullable|numeric|min:0.0001',
-            'destination' => 'nullable|string|max:150',
-            'public_entity' => 'nullable|boolean',
+            'destination' => 'nullable|string|max:255',
+            'public_entity_name' => 'nullable|string|max:150',
+
+            // Garantías
+            'has_guarantee' => 'nullable|in:S,N,1,0',
+            'guarantee_type' => 'nullable|string|max:50',
+            'guarantor_doc_type' => 'nullable|string|max:5',
+            'guarantor_doc_number' => 'nullable|string|max:30',
+            'guarantor_name' => 'nullable|string|max:200',
+            'guarantor_phone' => 'nullable|string|max:50',
+            'guarantor_email' => 'nullable|string|max:150',
+
+            // Vinculación con el banco
+            'has_exchange_intervention' => 'nullable|in:S,N,1,0',
+            'pays_taxes' => 'nullable|in:S,N,1,0',
+            'has_credit_card' => 'nullable|in:S,N,1,0',
+            'has_foreign_currency_account' => 'nullable|in:S,N,1,0',
+            'average_balance' => 'nullable|numeric',
+            'has_pos' => 'nullable|in:S,N,1,0',
+            'has_payroll' => 'nullable|in:S,N,1,0',
+
+            // Custodia y Workflow
             'initial_status_id' => 'required|exists:credit_statuses,id',
             'observations' => 'nullable|string|max:1000',
             'physical_checklists' => 'nullable|array',
@@ -214,7 +242,7 @@ class WorkflowController extends Controller
         $user = Auth::user();
 
         return DB::transaction(function () use ($validated, $user, $request) {
-            // 1. Crear o actualizar datos del cliente
+            // 1. Crear o actualizar datos del cliente con campos de sisproa54
             $customer = Customer::updateOrCreate(
                 [
                     'document_type' => $validated['document_type'],
@@ -223,8 +251,16 @@ class WorkflowController extends Controller
                 [
                     'customer_type' => $validated['customer_type'],
                     'business_name' => $validated['business_name'],
+                    'first_name' => $validated['first_name'] ?? null,
+                    'last_name' => $validated['last_name'] ?? null,
+                    'birth_or_constitution_date' => $validated['birth_or_constitution_date'] ?? null,
+                    'gender' => $validated['gender'] ?? null,
+                    'economic_activity' => $validated['economic_activity'] ?? null,
+                    'economic_activity_code' => $validated['economic_activity_code'] ?? null,
                     'email' => $validated['email'] ?? null,
                     'phone' => $validated['phone'] ?? null,
+                    'phone_mobile' => $validated['phone_mobile'] ?? null,
+                    'phone_alt' => $validated['phone_alt'] ?? null,
                     'address' => $validated['address'] ?? null,
                     'state_id' => $validated['state_id'],
                     'agency_id' => $validated['agency_id'],
@@ -248,6 +284,14 @@ class WorkflowController extends Controller
             $amount = (float)$validated['requested_amount'];
             $uvc = $rate > 0 ? round($amount / $rate, 4) : $amount;
 
+            $hasGuarantee = in_array($validated['has_guarantee'] ?? 'N', ['S', '1', 1, true], true);
+            $hasIntervencion = in_array($validated['has_exchange_intervention'] ?? 'N', ['S', '1', 1, true], true);
+            $paysTaxes = in_array($validated['pays_taxes'] ?? 'N', ['S', '1', 1, true], true);
+            $hasTdc = in_array($validated['has_credit_card'] ?? 'N', ['S', '1', 1, true], true);
+            $hasDivisas = in_array($validated['has_foreign_currency_account'] ?? 'N', ['S', '1', 1, true], true);
+            $hasPos = in_array($validated['has_pos'] ?? 'N', ['S', '1', 1, true], true);
+            $hasPayroll = in_array($validated['has_payroll'] ?? 'N', ['S', '1', 1, true], true);
+
             // 4. Crear solicitud de crédito en BD
             $statusId = (int)$validated['initial_status_id'];
             $creditRequest = CreditRequest::create([
@@ -264,8 +308,29 @@ class WorkflowController extends Controller
                 'currency' => $validated['currency'],
                 'exchange_rate' => $rate,
                 'amount_uvc' => $uvc,
-                'destination' => $validated['destination'] ?? 'Destino comercial / Capital de trabajo',
-                'public_entity' => !empty($validated['public_entity']),
+                'destination' => $validated['destination'] ?? 'Capital de Trabajo / Comercial',
+                'public_entity' => !empty($validated['public_entity_name']),
+                'public_entity_name' => $validated['public_entity_name'] ?? null,
+
+                // Garantías
+                'has_guarantee' => $hasGuarantee,
+                'guarantee_type' => $hasGuarantee ? ($validated['guarantee_type'] ?? null) : null,
+                'guarantor_doc_type' => $hasGuarantee ? ($validated['guarantor_doc_type'] ?? null) : null,
+                'guarantor_doc_number' => $hasGuarantee ? ($validated['guarantor_doc_number'] ?? null) : null,
+                'guarantor_name' => $hasGuarantee ? ($validated['guarantor_name'] ?? null) : null,
+                'guarantor_phone' => $hasGuarantee ? ($validated['guarantor_phone'] ?? null) : null,
+                'guarantor_email' => $hasGuarantee ? ($validated['guarantor_email'] ?? null) : null,
+
+                // Vinculación
+                'has_exchange_intervention' => $hasIntervencion,
+                'pays_taxes' => $paysTaxes,
+                'has_credit_card' => $hasTdc,
+                'has_foreign_currency_account' => $hasDivisas,
+                'average_balance' => !empty($validated['average_balance']) ? (float)$validated['average_balance'] : 0,
+                'has_pos' => $hasPos,
+                'has_payroll' => $hasPayroll,
+                'physical_checklists' => $validated['physical_checklists'] ?? [],
+
                 'request_date' => now()->toDateString(),
                 'observations' => $validated['observations'] ?? null,
                 'is_active' => true,

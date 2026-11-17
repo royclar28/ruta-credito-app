@@ -1,6 +1,6 @@
 @extends('layouts.app')
 
-@section('title', 'Apertura de Solicitud de Crédito')
+@section('title', 'Apertura de Solicitud de Crédito - BANFANB')
 
 @section('content')
 <div x-data="creditForm()" class="space-y-6">
@@ -16,8 +16,8 @@
                     <span class="text-xs font-extrabold uppercase tracking-wider text-amber-800 bg-amber-50 border border-amber-200 px-2.5 py-0.5 rounded-full">BANFANB • AGENCIA BANCARIA</span>
                     <span class="text-xs font-mono font-bold text-slate-500 bg-slate-100 px-2 py-0.5 rounded-md border border-slate-200">Ref: {{ $suggestedCode }}</span>
                 </div>
-                <h1 class="text-2xl font-black tracking-tight text-slate-900 mt-1">Apertura y Registro de Expediente</h1>
-                <p class="text-xs text-slate-500">Ingreso de carpeta física en taquilla bancaria y activación de tracking con trazabilidad inmutable.</p>
+                <h1 class="text-2xl font-black tracking-tight text-slate-900 mt-1">Formulario de Registro de Solicitud</h1>
+                <p class="text-xs text-slate-500">Apertura y custodia de carpeta física de crédito según normativa institucional SISPROA.</p>
             </div>
         </div>
 
@@ -49,11 +49,11 @@
         <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
 
             <!-- ========================================================================= -->
-            <!-- COLUMNA IZQUIERDA (2 COLS): DATOS DEL CLIENTE Y OPERACIÓN CREDITICIA -->
+            <!-- COLUMNA IZQUIERDA (2 COLS): DATOS CLIENTE, CRÉDITO, GARANTÍAS Y VINCULACIÓN -->
             <!-- ========================================================================= -->
             <div class="lg:col-span-2 space-y-6">
 
-                <!-- 1. IDENTIFICACIÓN DEL CLIENTE / SOLICITANTE -->
+                <!-- 1. IDENTIFICACIÓN Y DATOS DEL SOLICITANTE -->
                 <div class="bg-white rounded-2xl border border-slate-200/90 p-6 shadow-sm space-y-5">
                     <div class="flex items-center justify-between border-b border-slate-100 pb-3">
                         <div class="flex items-center gap-2.5">
@@ -62,62 +62,114 @@
                             </div>
                             <div>
                                 <h2 class="text-base font-extrabold text-slate-900">1. Identificación del Solicitante</h2>
-                                <p class="text-[11px] text-slate-500">Datos del titular de la solicitud de crédito</p>
+                                <p class="text-[11px] text-slate-500">Ficha del cliente titular (Persona Natural / Jurídica)</p>
                             </div>
+                        </div>
+                        <div class="text-right">
+                            <span class="text-[11px] text-slate-400 font-medium block">Fecha Planilla</span>
+                            <span class="text-xs font-bold text-slate-700 font-mono">{{ date('d-m-Y') }}</span>
                         </div>
                     </div>
 
                     <!-- Tipo Doc, Cédula/RIF y Tipo Cliente -->
                     <div class="grid grid-cols-1 sm:grid-cols-12 gap-4">
                         <div class="sm:col-span-3">
-                            <label class="block text-xs font-bold text-slate-700 uppercase tracking-wider mb-1.5">Tipo Doc.</label>
-                            <select name="document_type" x-model="docType" class="w-full text-sm font-semibold rounded-xl border border-slate-300 bg-white px-3 py-2.5 text-slate-800 focus:outline-none focus:ring-2 focus:ring-amber-500/20 focus:border-amber-600 shadow-sm transition-all">
-                                <option value="V">V - Venezolano</option>
-                                <option value="J">J - Jurídico / Empresa</option>
-                                <option value="E">E - Extranjero</option>
-                                <option value="G">G - Ente Gubernamental</option>
+                            <label class="block text-xs font-bold text-slate-700 uppercase tracking-wider mb-1.5">Tipo Identificación</label>
+                            <select name="document_type" x-model="docType" @change="onDocTypeChange()" class="w-full text-sm font-semibold rounded-xl border border-slate-300 bg-white px-3 py-2.5 text-slate-800 focus:outline-none focus:ring-2 focus:ring-amber-500/20 focus:border-amber-600 shadow-sm transition-all">
+                                <option value="J">Jurídico RIF (J)</option>
+                                <option value="V">Venezolano (V)</option>
+                                <option value="E">Extranjero (E)</option>
+                                <option value="R">Firma Personal (R)</option>
+                                <option value="G">Gubernamental (G)</option>
                             </select>
                         </div>
 
                         <div class="sm:col-span-5">
-                            <label class="block text-xs font-bold text-slate-700 uppercase tracking-wider mb-1.5">Número de Cédula o RIF</label>
+                            <label class="block text-xs font-bold text-slate-700 uppercase tracking-wider mb-1.5" x-text="docType === 'J' || docType === 'G' || docType === 'R' ? 'Número de RIF' : 'Cédula de Identidad'"></label>
                             <input type="text" name="document_number" x-model="docNumber"
-                                   placeholder="Ej: 12345678 o 301234567" 
+                                   placeholder="Ej: 301234567 o 12345678" 
                                    class="w-full text-sm font-semibold rounded-xl border border-slate-300 bg-white px-3.5 py-2.5 text-slate-900 placeholder:text-slate-400 placeholder:font-normal font-mono focus:outline-none focus:ring-2 focus:ring-amber-500/20 focus:border-amber-600 shadow-sm transition-all" required>
                         </div>
 
                         <div class="sm:col-span-4">
-                            <label class="block text-xs font-bold text-slate-700 uppercase tracking-wider mb-1.5">Tipo Cliente</label>
+                            <label class="block text-xs font-bold text-slate-700 uppercase tracking-wider mb-1.5">Tipo de Cliente</label>
                             <select name="customer_type" x-model="customerType" class="w-full text-sm font-semibold rounded-xl border border-slate-300 bg-white px-3 py-2.5 text-slate-800 focus:outline-none focus:ring-2 focus:ring-amber-500/20 focus:border-amber-600 shadow-sm transition-all">
                                 <option value="JURIDICO">Persona Jurídica (Empresa)</option>
-                                <option value="NATURAL">Persona Natural (Firma / Persona)</option>
+                                <option value="NATURAL">Persona Natural</option>
                             </select>
                         </div>
                     </div>
 
                     <!-- Razón Social o Nombre Completo -->
                     <div>
-                        <label class="block text-xs font-bold text-slate-700 uppercase tracking-wider mb-1.5">Nombre Completo o Razón Social</label>
-                        <input type="text" name="business_name" x-model="businessName" placeholder="EJ: INVERSIONES BANFANB C.A. O JUAN CARLOS PÉREZ" 
+                        <label class="block text-xs font-bold text-slate-700 uppercase tracking-wider mb-1.5" x-text="customerType === 'JURIDICO' ? 'Razón Social de la Empresa' : 'Nombres y Apellidos Completos'"></label>
+                        <input type="text" name="business_name" x-model="businessName" placeholder="EJ: INVERSIONES MONOLITOS C.A. O CARLOS ALBERTO MENDEZ" 
                                class="w-full text-sm font-bold rounded-xl border border-slate-300 bg-white px-3.5 py-2.5 text-slate-900 placeholder:text-slate-400 placeholder:font-normal uppercase focus:outline-none focus:ring-2 focus:ring-amber-500/20 focus:border-amber-600 shadow-sm transition-all" required>
                     </div>
 
-                    <!-- Contacto: Teléfono, Email y Estado -->
+                    <!-- Fecha de Constitución/Nacimiento, Antigüedad/Edad y Género -->
                     <div class="grid grid-cols-1 sm:grid-cols-12 gap-4">
-                        <div class="sm:col-span-6">
-                            <label class="block text-xs font-bold text-slate-700 uppercase tracking-wider mb-1.5">Correo Electrónico</label>
+                        <div class="sm:col-span-5">
+                            <label class="block text-xs font-bold text-slate-700 uppercase tracking-wider mb-1.5" x-text="customerType === 'JURIDICO' ? 'Fecha de Constitución' : 'Fecha de Nacimiento'"></label>
+                            <input type="date" name="birth_or_constitution_date" x-model="birthOrConstDate" @change="calculateAge()"
+                                   class="w-full text-sm font-medium rounded-xl border border-slate-300 bg-white px-3.5 py-2.5 text-slate-800 focus:outline-none focus:ring-2 focus:ring-amber-500/20 focus:border-amber-600 shadow-sm transition-all">
+                        </div>
+
+                        <div class="sm:col-span-3">
+                            <label class="block text-xs font-bold text-slate-700 uppercase tracking-wider mb-1.5" x-text="customerType === 'JURIDICO' ? 'Años Antigüedad' : 'Edad'"></label>
+                            <input type="text" readonly x-model="ageOrYears" placeholder="0" 
+                                   class="w-full text-sm font-bold text-center rounded-xl border border-slate-200 bg-slate-100 px-3.5 py-2.5 text-slate-700">
+                        </div>
+
+                        <div class="sm:col-span-4" x-show="customerType === 'NATURAL'">
+                            <label class="block text-xs font-bold text-slate-700 uppercase tracking-wider mb-1.5">Género</label>
+                            <select name="gender" class="w-full text-sm font-medium rounded-xl border border-slate-300 bg-white px-3 py-2.5 text-slate-800 focus:outline-none focus:ring-2 focus:ring-amber-500/20 focus:border-amber-600 shadow-sm transition-all">
+                                <option value="M">Masculino (M)</option>
+                                <option value="F">Femenino (F)</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <!-- Actividad Económica y Código -->
+                    <div class="grid grid-cols-1 sm:grid-cols-12 gap-4">
+                        <div class="sm:col-span-8">
+                            <label class="block text-xs font-bold text-slate-700 uppercase tracking-wider mb-1.5">Actividad Económica</label>
+                            <input type="text" name="economic_activity" placeholder="Ej: Comercio al por mayor de alimentos, manufactura o servicios" 
+                                   class="w-full text-sm font-medium rounded-xl border border-slate-300 bg-white px-3.5 py-2.5 text-slate-800 placeholder:text-slate-400 focus:outline-none focus:ring-2 focus:ring-amber-500/20 focus:border-amber-600 shadow-sm transition-all">
+                        </div>
+
+                        <div class="sm:col-span-4">
+                            <label class="block text-xs font-bold text-slate-700 uppercase tracking-wider mb-1.5">Cód. Actividad Económica</label>
+                            <input type="text" name="economic_activity_code" placeholder="Ej: 512290" 
+                                   class="w-full text-sm font-mono font-medium rounded-xl border border-slate-300 bg-white px-3.5 py-2.5 text-slate-800 placeholder:text-slate-400 focus:outline-none focus:ring-2 focus:ring-amber-500/20 focus:border-amber-600 shadow-sm transition-all">
+                        </div>
+                    </div>
+
+                    <!-- Teléfonos y Correo Electrónico -->
+                    <div class="grid grid-cols-1 sm:grid-cols-12 gap-4">
+                        <div class="sm:col-span-4">
+                            <label class="block text-xs font-bold text-slate-700 uppercase tracking-wider mb-1.5">Teléfono Local / Oficina</label>
                             <div class="relative">
-                                <i data-lucide="mail" class="w-4 h-4 text-slate-400 absolute left-3.5 top-3"></i>
-                                <input type="email" name="email" x-model="email" placeholder="cliente@correo.com" 
+                                <i data-lucide="phone" class="w-4 h-4 text-slate-400 absolute left-3.5 top-3"></i>
+                                <input type="text" name="phone" placeholder="0212-1234567" 
                                        class="w-full text-sm font-medium rounded-xl border border-slate-300 bg-white pl-10 pr-3.5 py-2.5 text-slate-800 placeholder:text-slate-400 focus:outline-none focus:ring-2 focus:ring-amber-500/20 focus:border-amber-600 shadow-sm transition-all">
                             </div>
                         </div>
 
-                        <div class="sm:col-span-6">
-                            <label class="block text-xs font-bold text-slate-700 uppercase tracking-wider mb-1.5">Teléfono Principal</label>
+                        <div class="sm:col-span-4">
+                            <label class="block text-xs font-bold text-slate-700 uppercase tracking-wider mb-1.5">Teléfono Celular</label>
                             <div class="relative">
-                                <i data-lucide="phone" class="w-4 h-4 text-slate-400 absolute left-3.5 top-3"></i>
-                                <input type="text" name="phone" x-model="phone" placeholder="0414-1234567 / 0212-..." 
+                                <i data-lucide="smartphone" class="w-4 h-4 text-slate-400 absolute left-3.5 top-3"></i>
+                                <input type="text" name="phone_mobile" placeholder="0414-1234567" 
+                                       class="w-full text-sm font-medium rounded-xl border border-slate-300 bg-white pl-10 pr-3.5 py-2.5 text-slate-800 placeholder:text-slate-400 focus:outline-none focus:ring-2 focus:ring-amber-500/20 focus:border-amber-600 shadow-sm transition-all">
+                            </div>
+                        </div>
+
+                        <div class="sm:col-span-4">
+                            <label class="block text-xs font-bold text-slate-700 uppercase tracking-wider mb-1.5">Correo Electrónico</label>
+                            <div class="relative">
+                                <i data-lucide="mail" class="w-4 h-4 text-slate-400 absolute left-3.5 top-3"></i>
+                                <input type="email" name="email" placeholder="cliente@correo.com" 
                                        class="w-full text-sm font-medium rounded-xl border border-slate-300 bg-white pl-10 pr-3.5 py-2.5 text-slate-800 placeholder:text-slate-400 focus:outline-none focus:ring-2 focus:ring-amber-500/20 focus:border-amber-600 shadow-sm transition-all">
                             </div>
                         </div>
@@ -127,7 +179,7 @@
                     <div class="grid grid-cols-1 sm:grid-cols-12 gap-4">
                         <div class="sm:col-span-4">
                             <label class="block text-xs font-bold text-slate-700 uppercase tracking-wider mb-1.5">Estado Geográfico</label>
-                            <select name="state_id" x-model="stateId" class="w-full text-sm font-semibold rounded-xl border border-slate-300 bg-white px-3 py-2.5 text-slate-800 focus:outline-none focus:ring-2 focus:ring-amber-500/20 focus:border-amber-600 shadow-sm transition-all">
+                            <select name="state_id" class="w-full text-sm font-semibold rounded-xl border border-slate-300 bg-white px-3 py-2.5 text-slate-800 focus:outline-none focus:ring-2 focus:ring-amber-500/20 focus:border-amber-600 shadow-sm transition-all">
                                 @foreach($states as $st)
                                     <option value="{{ $st->id }}" {{ $st->id == 2 ? 'selected' : '' }}>{{ $st->name }} ({{ $st->region->name ?? 'Nacional' }})</option>
                                 @endforeach
@@ -138,7 +190,7 @@
                             <label class="block text-xs font-bold text-slate-700 uppercase tracking-wider mb-1.5">Dirección Fiscal / Domicilio</label>
                             <div class="relative">
                                 <i data-lucide="map-pin" class="w-4 h-4 text-slate-400 absolute left-3.5 top-3"></i>
-                                <input type="text" name="address" x-model="address" placeholder="Av. Principal, Edificio / Casa, Municipio, Ciudad..." 
+                                <input type="text" name="address" placeholder="Av. Principal, Edificio / Casa, Municipio, Ciudad..." 
                                        class="w-full text-sm font-medium rounded-xl border border-slate-300 bg-white pl-10 pr-3.5 py-2.5 text-slate-800 placeholder:text-slate-400 focus:outline-none focus:ring-2 focus:ring-amber-500/20 focus:border-amber-600 shadow-sm transition-all">
                             </div>
                         </div>
@@ -154,7 +206,7 @@
                             </div>
                             <div>
                                 <h2 class="text-base font-extrabold text-slate-900">2. Información Financiera del Crédito</h2>
-                                <p class="text-[11px] text-slate-500">Parámetros de colocación y cálculo de indexación UVC</p>
+                                <p class="text-[11px] text-slate-500">Parámetros de colocación y cálculo de indexación UVC (BCV / SUDEBAN)</p>
                             </div>
                         </div>
                     </div>
@@ -181,9 +233,9 @@
                         </div>
                     </div>
 
-                    <!-- Modalidad y Destino -->
-                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                        <div>
+                    <!-- Modalidad, Destino y Ente Postulante -->
+                    <div class="grid grid-cols-1 sm:grid-cols-12 gap-4">
+                        <div class="sm:col-span-4">
                             <label class="block text-xs font-bold text-slate-700 uppercase tracking-wider mb-1.5">Modalidad de Financiamiento</label>
                             <select name="modality_id" class="w-full text-sm font-semibold rounded-xl border border-slate-300 bg-white px-3 py-2.5 text-slate-800 focus:outline-none focus:ring-2 focus:ring-amber-500/20 focus:border-amber-600 shadow-sm transition-all">
                                 @foreach($modalities as $mod)
@@ -192,9 +244,15 @@
                             </select>
                         </div>
 
-                        <div>
-                            <label class="block text-xs font-bold text-slate-700 uppercase tracking-wider mb-1.5">Destino Específico del Crédito</label>
-                            <input type="text" name="destination" placeholder="Ej: Adquisición de materia prima, inventario o equipos" 
+                        <div class="sm:col-span-4">
+                            <label class="block text-xs font-bold text-slate-700 uppercase tracking-wider mb-1.5">Destino del Crédito</label>
+                            <input type="text" name="destination" placeholder="Ej: Capital de trabajo, materia prima" 
+                                   class="w-full text-sm font-medium rounded-xl border border-slate-300 bg-white px-3.5 py-2.5 text-slate-800 placeholder:text-slate-400 focus:outline-none focus:ring-2 focus:ring-amber-500/20 focus:border-amber-600 shadow-sm transition-all" required>
+                        </div>
+
+                        <div class="sm:col-span-4">
+                            <label class="block text-xs font-bold text-slate-700 uppercase tracking-wider mb-1.5">Ente que lo Postula</label>
+                            <input type="text" name="public_entity_name" placeholder="Ej: MPPD, Gobernación, Ninguno" 
                                    class="w-full text-sm font-medium rounded-xl border border-slate-300 bg-white px-3.5 py-2.5 text-slate-800 placeholder:text-slate-400 focus:outline-none focus:ring-2 focus:ring-amber-500/20 focus:border-amber-600 shadow-sm transition-all">
                         </div>
                     </div>
@@ -253,12 +311,159 @@
                                     </div>
                                 </div>
                             </div>
-                            <p class="text-[11px] text-slate-400 mt-2.5 pt-2.5 border-t border-slate-800/80">Unidad de Valor de Crédito indexada automáticamente según normativa bancaria nacional vigente.</p>
+                            <p class="text-[11px] text-slate-400 mt-2.5 pt-2.5 border-t border-slate-800/80">Unidad de Valor de Crédito calculada según tipo de cambio de referencia para la cartera bancaria nacional.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 3. MÓDULO DE GARANTÍAS (SISPROA54) -->
+                <div class="bg-white rounded-2xl border border-slate-200/90 p-6 shadow-sm space-y-5">
+                    <div class="flex items-center justify-between border-b border-slate-100 pb-3">
+                        <div class="flex items-center gap-2.5">
+                            <div class="w-8 h-8 rounded-lg bg-emerald-50 text-emerald-700 flex items-center justify-center font-bold">
+                                <i data-lucide="shield-alert" class="w-4 h-4"></i>
+                            </div>
+                            <div>
+                                <h2 class="text-base font-extrabold text-slate-900">3. Garantías de la Operación</h2>
+                                <p class="text-[11px] text-slate-500">Esquema de fianza, aval o garantía colateral consignada</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="grid grid-cols-1 sm:grid-cols-12 gap-4">
+                        <div class="sm:col-span-4">
+                            <label class="block text-xs font-bold text-slate-700 uppercase tracking-wider mb-1.5">¿Tiene Garantía?</label>
+                            <select name="has_guarantee" x-model="hasGuarantee" class="w-full text-sm font-semibold rounded-xl border border-slate-300 bg-white px-3 py-2.5 text-slate-800 focus:outline-none focus:ring-2 focus:ring-amber-500/20 focus:border-amber-600 shadow-sm transition-all">
+                                <option value="N">No Posee Garantía</option>
+                                <option value="S">Sí Posee Garantía</option>
+                            </select>
                         </div>
 
-                        <div class="flex items-center gap-2.5 pt-1">
-                            <input type="checkbox" id="public_entity" name="public_entity" value="1" class="rounded border-slate-300 text-amber-600 focus:ring-amber-500 h-4 w-4">
-                            <label for="public_entity" class="text-xs font-semibold text-slate-700 select-none cursor-pointer">El solicitante es un Ente Público, Alcaldía, Gobernación o Empresa del Estado</label>
+                        <div class="sm:col-span-8" x-show="hasGuarantee === 'S'">
+                            <label class="block text-xs font-bold text-slate-700 uppercase tracking-wider mb-1.5">Tipo de Garantía</label>
+                            <select name="guarantee_type" x-model="guaranteeType" class="w-full text-sm font-semibold rounded-xl border border-slate-300 bg-white px-3 py-2.5 text-slate-800 focus:outline-none focus:ring-2 focus:ring-amber-500/20 focus:border-amber-600 shadow-sm transition-all">
+                                <option value="Fianza Personal">Fianza Personal</option>
+                                <option value="Fianza Jurídica">Fianza Jurídica</option>
+                                <option value="Avales">Avales</option>
+                                <option value="Inmobiliario">Inmobiliario (Hipoteca)</option>
+                                <option value="Mobiliario">Mobiliario (Prenda)</option>
+                                <option value="Colateral en Divisas">Colateral en Divisas</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <!-- Datos del Fiador / Garante (si aplica) -->
+                    <div x-show="hasGuarantee === 'S' && (guaranteeType === 'Fianza Personal' || guaranteeType === 'Fianza Jurídica')" class="p-4 bg-slate-50 rounded-xl border border-slate-200 space-y-4">
+                        <span class="text-xs font-bold uppercase tracking-wider text-slate-700 block">Datos del Fiador / Garante</span>
+                        
+                        <div class="grid grid-cols-1 sm:grid-cols-12 gap-4">
+                            <div class="sm:col-span-3">
+                                <label class="block text-[11px] font-bold text-slate-600 uppercase mb-1">Tipo Doc.</label>
+                                <select name="guarantor_doc_type" class="w-full text-xs font-semibold rounded-lg border border-slate-300 bg-white px-2.5 py-2">
+                                    <option value="V">V - Cédula</option>
+                                    <option value="J">J - RIF Empresa</option>
+                                    <option value="E">E - Extranjero</option>
+                                    <option value="R">R - Firma Pers.</option>
+                                </select>
+                            </div>
+
+                            <div class="sm:col-span-4">
+                                <label class="block text-[11px] font-bold text-slate-600 uppercase mb-1">Cédula / RIF Fiador</label>
+                                <input type="text" name="guarantor_doc_number" placeholder="Ej: 12345678" 
+                                       class="w-full text-xs font-mono rounded-lg border border-slate-300 bg-white px-3 py-2">
+                            </div>
+
+                            <div class="sm:col-span-5">
+                                <label class="block text-[11px] font-bold text-slate-600 uppercase mb-1">Nombre Completo o Empresa Fiadora</label>
+                                <input type="text" name="guarantor_name" placeholder="Nombre de la persona o empresa fiadora" 
+                                       class="w-full text-xs uppercase rounded-lg border border-slate-300 bg-white px-3 py-2">
+                            </div>
+                        </div>
+
+                        <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                            <div>
+                                <label class="block text-[11px] font-bold text-slate-600 uppercase mb-1">Teléfono Fiador</label>
+                                <input type="text" name="guarantor_phone" placeholder="0414-1234567" 
+                                       class="w-full text-xs rounded-lg border border-slate-300 bg-white px-3 py-2">
+                            </div>
+                            <div>
+                                <label class="block text-[11px] font-bold text-slate-600 uppercase mb-1">Correo Electrónico Fiador</label>
+                                <input type="email" name="guarantor_email" placeholder="fiador@correo.com" 
+                                       class="w-full text-xs rounded-lg border border-slate-300 bg-white px-3 py-2">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 4. DATOS DE VINCULACIÓN DEL CLIENTE (SISPROA54) -->
+                <div class="bg-white rounded-2xl border border-slate-200/90 p-6 shadow-sm space-y-5">
+                    <div class="flex items-center justify-between border-b border-slate-100 pb-3">
+                        <div class="flex items-center gap-2.5">
+                            <div class="w-8 h-8 rounded-lg bg-teal-50 text-teal-700 flex items-center justify-center font-bold">
+                                <i data-lucide="link-2" class="w-4 h-4"></i>
+                            </div>
+                            <div>
+                                <h2 class="text-base font-extrabold text-slate-900">4. Datos de Vinculación del Cliente con el Banco</h2>
+                                <p class="text-[11px] text-slate-500">Reciprocidad comercial, cuentas y productos BANFANB</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="grid grid-cols-2 sm:grid-cols-4 gap-4">
+                        <div>
+                            <label class="block text-xs font-bold text-slate-700 uppercase tracking-wider mb-1.5">Intervención</label>
+                            <select name="has_exchange_intervention" class="w-full text-sm font-semibold rounded-xl border border-slate-300 bg-white px-3 py-2 text-slate-800">
+                                <option value="N">No</option>
+                                <option value="S">Sí</option>
+                            </select>
+                        </div>
+
+                        <div>
+                            <label class="block text-xs font-bold text-slate-700 uppercase tracking-wider mb-1.5">Pago Impuestos</label>
+                            <select name="pays_taxes" class="w-full text-sm font-semibold rounded-xl border border-slate-300 bg-white px-3 py-2 text-slate-800">
+                                <option value="N">No</option>
+                                <option value="S">Sí</option>
+                            </select>
+                        </div>
+
+                        <div>
+                            <label class="block text-xs font-bold text-slate-700 uppercase tracking-wider mb-1.5">Posee TDC</label>
+                            <select name="has_credit_card" class="w-full text-sm font-semibold rounded-xl border border-slate-300 bg-white px-3 py-2 text-slate-800">
+                                <option value="N">No</option>
+                                <option value="S">Sí</option>
+                            </select>
+                        </div>
+
+                        <div>
+                            <label class="block text-xs font-bold text-slate-700 uppercase tracking-wider mb-1.5">Cuenta Divisas</label>
+                            <select name="has_foreign_currency_account" class="w-full text-sm font-semibold rounded-xl border border-slate-300 bg-white px-3 py-2 text-slate-800">
+                                <option value="N">No</option>
+                                <option value="S">Sí</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="grid grid-cols-1 sm:grid-cols-12 gap-4 items-end pt-2">
+                        <div class="sm:col-span-6">
+                            <label class="block text-xs font-bold text-slate-700 uppercase tracking-wider mb-1.5">Saldo Promedio en Cuenta (Bs. / USD)</label>
+                            <input type="number" step="0.01" min="0" name="average_balance" placeholder="0.00" 
+                                   class="w-full text-sm font-bold font-mono rounded-xl border border-slate-300 bg-white px-3.5 py-2.5 text-slate-900 focus:outline-none focus:ring-2 focus:ring-amber-500/20 focus:border-amber-600 shadow-sm transition-all">
+                        </div>
+
+                        <div class="sm:col-span-3">
+                            <label class="block text-xs font-bold text-slate-700 uppercase tracking-wider mb-1.5">Punto Venta POS</label>
+                            <select name="has_pos" class="w-full text-sm font-semibold rounded-xl border border-slate-300 bg-white px-3 py-2.5 text-slate-800">
+                                <option value="N">No</option>
+                                <option value="S">Sí</option>
+                            </select>
+                        </div>
+
+                        <div class="sm:col-span-3">
+                            <label class="block text-xs font-bold text-slate-700 uppercase tracking-wider mb-1.5">Pago Nóminas</label>
+                            <select name="has_payroll" class="w-full text-sm font-semibold rounded-xl border border-slate-300 bg-white px-3 py-2.5 text-slate-800">
+                                <option value="N">No</option>
+                                <option value="S">Sí</option>
+                            </select>
                         </div>
                     </div>
                 </div>
@@ -270,14 +475,14 @@
             <!-- ========================================================================= -->
             <div class="space-y-6">
 
-                <!-- 3. CUSTODIA Y DESTINO DE LA CARPETA FÍSICA -->
+                <!-- 5. CUSTODIA Y DESTINO DE LA CARPETA FÍSICA -->
                 <div class="bg-white rounded-2xl border border-slate-200/90 p-6 shadow-sm space-y-5">
                     <div class="flex items-center gap-2.5 border-b border-slate-100 pb-3">
                         <div class="w-8 h-8 rounded-lg bg-indigo-50 text-indigo-700 flex items-center justify-center font-bold">
                             <i data-lucide="archive" class="w-4 h-4"></i>
                         </div>
                         <div>
-                            <h2 class="text-base font-extrabold text-slate-900">3. Custodia en Agencia</h2>
+                            <h2 class="text-base font-extrabold text-slate-900">5. Custodia en Agencia</h2>
                             <p class="text-[11px] text-slate-500">Recepción de carpeta física y enrutamiento</p>
                         </div>
                     </div>
@@ -355,7 +560,7 @@
                     <div class="pt-2">
                         <button type="submit" class="w-full py-4 px-5 rounded-2xl bg-gradient-to-r from-amber-500 via-amber-600 to-yellow-600 hover:from-amber-600 hover:to-amber-700 text-slate-950 font-black text-sm shadow-xl shadow-amber-500/25 border border-amber-400/50 flex items-center justify-center gap-2.5 transition-all transform active:scale-[0.99] cursor-pointer">
                             <i data-lucide="check-circle-2" class="w-5 h-5 text-slate-950"></i>
-                            <span>Registrar y Aperturar Expediente</span>
+                            <span>Registrar y Aperturar Solicitud</span>
                         </button>
                     </div>
                 </div>
@@ -374,10 +579,8 @@
             docNumber: '',
             customerType: 'JURIDICO',
             businessName: '',
-            phone: '',
-            email: '',
-            address: '',
-            stateId: 2,
+            birthOrConstDate: '',
+            ageOrYears: '',
 
             productId: 1,
             subproductId: '',
@@ -390,9 +593,20 @@
             exchangeRate: 36.50,
             uvcFormatted: '0.00',
 
+            hasGuarantee: 'N',
+            guaranteeType: 'Fianza Personal',
+
             init() {
                 this.onProductChange();
                 this.calculateUvc();
+            },
+
+            onDocTypeChange() {
+                if (this.docType === 'J' || this.docType === 'G' || this.docType === 'R') {
+                    this.customerType = 'JURIDICO';
+                } else {
+                    this.customerType = 'NATURAL';
+                }
             },
 
             onProductChange() {
@@ -417,6 +631,21 @@
                 const rate = parseFloat(this.exchangeRate) || 1;
                 const uvc = rate > 0 ? (amount / rate) : amount;
                 this.uvcFormatted = new Intl.NumberFormat('es-VE', { minimumFractionDigits: 2, maximumFractionDigits: 4 }).format(uvc);
+            },
+
+            calculateAge() {
+                if (!this.birthOrConstDate) {
+                    this.ageOrYears = '';
+                    return;
+                }
+                const d = new Date(this.birthOrConstDate);
+                const today = new Date();
+                let diff = today.getFullYear() - d.getFullYear();
+                const m = today.getMonth() - d.getMonth();
+                if (m < 0 || (m === 0 && today.getDate() < d.getDate())) {
+                    diff--;
+                }
+                this.ageOrYears = diff >= 0 ? diff : 0;
             }
         }
     }
